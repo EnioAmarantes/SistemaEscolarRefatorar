@@ -4,7 +4,9 @@
 [![Java CD](https://github.com/netoneze/crud-java-progdesktop/actions/workflows/main.yml/badge.svg)](https://github.com/netoneze/crud-java-progdesktop/actions/workflows/main.yml)
 
 # Sistema de Gerenciamento Escolar - CRUD/JAVA
-Sistema fictício para controle de uma escola em Java.
+Refatoração do Sistema fictício para controle de uma escola em Java.
+Repositório original: ![Git](https://github.com/netoneze/crud-java-progdesktop)
+
 
 Desenvolvido para a disciplina de Programação Desktop, ministrada pelo professor Dr. Fabricio Martins Lopes, do curso de Engenharia de Software da UTFPR de Cornélio Procópio.
 
