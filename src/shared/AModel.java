@@ -3,7 +3,7 @@ package shared;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class Model {
+public abstract class AModel {
 	public static final String STRING_EMPTY = "";
 	
 	@Getter
