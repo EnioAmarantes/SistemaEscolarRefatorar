@@ -1,2 +1,3 @@
 module SistemGerenciamentoEscolar {
+	requires lombok;
 }
