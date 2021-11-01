@@ -1,16 +1,21 @@
 package views;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.Toolkit;
-import javax.swing.JButton;
 import java.awt.BorderLayout;
-import javax.swing.JLayeredPane;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import java.awt.Font;
 
 public class StartWindow {
 
 	private JFrame frmSistemaDeGerenciamento;
+	private final static String TITLE = "Sistema de Gerenciamento Escolar";
 
 	/**
 	 * Launch the application.
@@ -40,34 +45,42 @@ public class StartWindow {
 	 */
 	private void initialize() {
 		frmSistemaDeGerenciamento = new JFrame();
-		frmSistemaDeGerenciamento.setPreferredSize(new Dimension(450, 300));
-		frmSistemaDeGerenciamento.setMinimumSize(new Dimension(450, 300));
-		frmSistemaDeGerenciamento.setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Estudos\\UTFPR\\7\u00BA Semestre\\Manuten\u00E7\u00E3o de Software\\Projetos\\SistemaEscolarRefatorar\\src\\shared\\icons\\estudando.png"));
-		frmSistemaDeGerenciamento.setTitle("Sistema de Gerenciamento Escolar");
+		frmSistemaDeGerenciamento.setMinimumSize(new Dimension(400, 300));
+		frmSistemaDeGerenciamento.setIconImage(Toolkit.getDefaultToolkit().getImage(StartWindow.class.getResource("/shared/icons/estudando.png")));
+		frmSistemaDeGerenciamento.setTitle(TITLE);
 		frmSistemaDeGerenciamento.setBounds(100, 100, 450, 300);
 		frmSistemaDeGerenciamento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JLayeredPane layeredPane = new JLayeredPane();
-		frmSistemaDeGerenciamento.getContentPane().add(layeredPane, BorderLayout.CENTER);
+		JPanel panel = new JPanel();
+		frmSistemaDeGerenciamento.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
 		
 		JButton btnAluno = new JButton("Aluno");
-		btnAluno.setBounds(50, 47, 92, 31);
-		layeredPane.add(btnAluno);
-		
-		JButton btnProfessor = new JButton("Professor");
-		btnProfessor.setBounds(50, 102, 92, 31);
-		layeredPane.add(btnProfessor);
-		
-		JButton btnTerceiro = new JButton("Terceiro");
-		btnTerceiro.setBounds(50, 156, 92, 31);
-		layeredPane.add(btnTerceiro);
+		btnAluno.setBounds(55, 66, 87, 26);
+		panel.add(btnAluno);
 		
 		JButton btnTurma = new JButton("Turma");
-		btnTurma.setBounds(278, 47, 92, 31);
-		layeredPane.add(btnTurma);
+		btnTurma.setBounds(283, 66, 92, 26);
+		panel.add(btnTurma);
+		
+		JButton btnProfessor = new JButton("Professor");
+		btnProfessor.setBounds(55, 97, 87, 26);
+		panel.add(btnProfessor);
 		
 		JButton btnRelatorio = new JButton("Relat\u00F3rio");
-		btnRelatorio.setBounds(278, 102, 92, 31);
-		layeredPane.add(btnRelatorio);
+		btnRelatorio.setBounds(283, 97, 92, 26);
+		panel.add(btnRelatorio);
+		
+		JButton btnTerceiro = new JButton("Terceiro");
+		btnTerceiro.setBounds(55, 128, 87, 31);
+		panel.add(btnTerceiro);
+		
+		JLabel lblTitle = new JLabel(TITLE);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblTitle.setBounds(55, 21, 320, 14);
+		panel.add(lblTitle);
 	}
 }
