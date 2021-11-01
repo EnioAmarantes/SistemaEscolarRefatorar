@@ -5,9 +5,8 @@ import javax.swing.JFrame;
 import java.awt.Toolkit;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.JLayeredPane;
+import java.awt.Dimension;
 
 public class StartWindow {
 
@@ -41,6 +40,8 @@ public class StartWindow {
 	 */
 	private void initialize() {
 		frmSistemaDeGerenciamento = new JFrame();
+		frmSistemaDeGerenciamento.setPreferredSize(new Dimension(450, 300));
+		frmSistemaDeGerenciamento.setMinimumSize(new Dimension(450, 300));
 		frmSistemaDeGerenciamento.setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Estudos\\UTFPR\\7\u00BA Semestre\\Manuten\u00E7\u00E3o de Software\\Projetos\\SistemaEscolarRefatorar\\src\\shared\\icons\\estudando.png"));
 		frmSistemaDeGerenciamento.setTitle("Sistema de Gerenciamento Escolar");
 		frmSistemaDeGerenciamento.setBounds(100, 100, 450, 300);
