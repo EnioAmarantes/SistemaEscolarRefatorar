@@ -1,6 +1,10 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import shared.forms.FormPessoaBase;
 
@@ -32,7 +36,11 @@ public class FormAluno extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormAluno() {
-		TITLE = "Testando";
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		this.TITLE = "Cadastro de Alunos";
 	}
 
 	public void BackHome() {
