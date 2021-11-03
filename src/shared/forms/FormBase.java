@@ -13,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import shared.IBase;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public abstract class FormBase extends JFrame implements IBase {
 
@@ -20,8 +22,8 @@ public abstract class FormBase extends JFrame implements IBase {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private final static String TITLE = "Title";
+	protected JPanel contentPane;
+	protected String TITLE = "Title";
 	private JTable tblContent;
 
 	/**
@@ -48,8 +50,14 @@ public abstract class FormBase extends JFrame implements IBase {
 		btnBack.setBounds(9, 12, 89, 23);
 		contentPane.add(btnBack);
 		
-		JLabel lblTitle = new JLabel(TITLE);
-		lblTitle.setName("");
+		JLabel lblTitle = new JLabel();
+		lblTitle.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				lblTitle.setText(TITLE);
+			}
+		});
+		lblTitle.setLabelFor(contentPane);
+		lblTitle.setName("lblTitle");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblTitle.setBounds(9, 46, 330, 37);
 		contentPane.add(lblTitle);
