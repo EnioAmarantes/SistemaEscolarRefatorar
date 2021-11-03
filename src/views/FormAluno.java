@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import shared.forms.FormPessoaBase;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class FormAluno extends FormPessoaBase {
@@ -98,19 +99,31 @@ public class FormAluno extends FormPessoaBase {
 	
 	@Override
 	public void Create() {
+		if(this.FieldIsEmpty()) {
+			JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios, \n todos os campos são obrigatórios");
+		}else {
 		// TODO Auto-generated method stub
-		
+		}
 	}
 	
 	@Override
 	public void Update() {
+		if(this.FieldIsEmpty()) {
+			JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios, \n todos os campos são obrigatórios");
+		}else {
 		// TODO Auto-generated method stub
-		
+		}
 	}
 	
 	@Override
 	public void Remove() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean FieldIsEmpty() {
+		return (txtName.getText().equals("") || 
+				txtEmail.getText().equals("") || 
+				txtRa.getText().equals(""));
 	}
 }
