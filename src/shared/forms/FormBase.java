@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import shared.IBase;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.awt.Toolkit;
 
 public abstract class FormBase extends JFrame implements IBase {
 
@@ -23,13 +24,14 @@ public abstract class FormBase extends JFrame implements IBase {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected JPanel contentPane;
-	protected String TITLE = "Title";
+	private String TITLE = "Title";
 	private JTable tblContent;
 
 	/**
 	 * Create the frame.
 	 */
 	public FormBase() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormBase.class.getResource("/shared/icons/estudando.png")));
 		setPreferredSize(new Dimension(800, 600));
 		setMinimumSize(new Dimension(600, 400));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,5 +142,10 @@ public abstract class FormBase extends JFrame implements IBase {
 		tblContent = new JTable();
 		tblContent.setBounds(349, 46, 325, 304);
 		contentPane.add(tblContent);
+	}
+
+	protected void setThisTitle(String title) {
+		setTitle(title);
+		TITLE = title;
 	}
 }
