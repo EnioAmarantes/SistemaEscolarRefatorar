@@ -3,10 +3,13 @@ package shared.forms;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import shared.ITable;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public abstract class FormPessoaBase extends FormBase {
+public abstract class FormPessoaBase extends FormBase implements ITable {
 	/**
 	 * 
 	 */

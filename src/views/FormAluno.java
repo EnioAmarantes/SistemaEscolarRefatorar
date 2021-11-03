@@ -3,12 +3,12 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import shared.forms.FormPessoaBase;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class FormAluno extends FormPessoaBase {
 
@@ -22,7 +22,7 @@ public class FormAluno extends FormPessoaBase {
 	
 	private String RA = "";
 	private JTextField txtRa;
-	
+	private String[] columns = {"Id", "Nome", "Email", "RA"};
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -58,6 +58,8 @@ public class FormAluno extends FormPessoaBase {
 		getContentPane().add(txtRa);
 		txtRa.setColumns(10);
 		Name = "Nome do Aluno";
+		
+		LoadTable();
 	}
 
 	@Override
@@ -112,5 +114,11 @@ public class FormAluno extends FormPessoaBase {
 	public void Remove() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void LoadTable() {
+		createTable(columns);
+		this.scrollPane.setViewportView(this.tblContent);
 	}
 }
