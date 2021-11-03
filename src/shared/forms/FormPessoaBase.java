@@ -3,14 +3,18 @@ package shared.forms;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public abstract class FormPessoaBase extends FormBase {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField txtName;
-	private JTextField txtEmail;
+	protected String Name = "";
+	protected String Email = "";
+	protected JTextField txtName;
+	protected JTextField txtEmail;
 
 	/**
 	 * Create the frame.
@@ -24,6 +28,11 @@ public abstract class FormPessoaBase extends FormBase {
 		getContentPane().add(lblName);
 		
 		txtName = new JTextField();
+		txtName.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				txtName.setText(Name);
+			}
+		});
 		lblName.setLabelFor(txtName);
 		txtName.setBounds(10, 101, 326, 20);
 		getContentPane().add(txtName);
@@ -35,6 +44,11 @@ public abstract class FormPessoaBase extends FormBase {
 		getContentPane().add(lblEmail);
 		
 		txtEmail = new JTextField();
+		txtEmail.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				txtEmail.setText(Email);
+			}
+		});
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(10, 148, 326, 20);
 		getContentPane().add(txtEmail);
