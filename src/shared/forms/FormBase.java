@@ -11,11 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import shared.IBase;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.Toolkit;
+import javax.swing.JScrollPane;
 
 public abstract class FormBase extends JFrame implements IBase {
 
@@ -25,7 +27,8 @@ public abstract class FormBase extends JFrame implements IBase {
 	private static final long serialVersionUID = 1L;
 	protected JPanel contentPane;
 	private String TITLE = "Title";
-	private JTable tblContent;
+	protected JTable tblContent;
+	protected JScrollPane scrollPane;
 
 	/**
 	 * Create the frame.
@@ -139,13 +142,21 @@ public abstract class FormBase extends JFrame implements IBase {
 		btnRemove.setBounds(222, 310, 75, 29);
 		contentPane.add(btnRemove);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(349, 46, 325, 304);
+		contentPane.add(scrollPane);
+		
 		tblContent = new JTable();
-		tblContent.setBounds(349, 46, 325, 304);
-		contentPane.add(tblContent);
+		scrollPane.setViewportView(tblContent);
 	}
 
 	protected void setThisTitle(String title) {
 		setTitle(title);
 		TITLE = title;
+	}
+	
+	public void createTable(String[] columns) {
+		Object[][] data = {};
+		this.tblContent.setModel(new DefaultTableModel(data, columns));
 	}
 }

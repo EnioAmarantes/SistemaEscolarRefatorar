@@ -3,13 +3,15 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import shared.forms.FormPessoaBase;
-import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
 
 public class FormAluno extends FormPessoaBase {
 
@@ -23,7 +25,7 @@ public class FormAluno extends FormPessoaBase {
 	
 	private String RA = "";
 	private JTextField txtRa;
-	
+	private String[] columns = {"Id", "Nome", "Email", "RA"};
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -59,6 +61,8 @@ public class FormAluno extends FormPessoaBase {
 		getContentPane().add(txtRa);
 		txtRa.setColumns(10);
 		Name = "Nome do Aluno";
+		
+		LoadTable();
 	}
 
 	@Override
@@ -100,7 +104,7 @@ public class FormAluno extends FormPessoaBase {
 	@Override
 	public void Create() {
 		if(this.FieldIsEmpty()) {
-			JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios, \n todos os campos são obrigatórios");
+			JOptionPane.showMessageDialog(null, "Um ou mais campos estï¿½o vazios, \n todos os campos sï¿½o obrigatï¿½rios");
 		}else {
 		// TODO Auto-generated method stub
 		}
@@ -109,7 +113,7 @@ public class FormAluno extends FormPessoaBase {
 	@Override
 	public void Update() {
 		if(this.FieldIsEmpty()) {
-			JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios, \n todos os campos são obrigatórios");
+			JOptionPane.showMessageDialog(null, "Um ou mais campos estï¿½o vazios, \n todos os campos sï¿½o obrigatï¿½rios");
 		}else {
 		// TODO Auto-generated method stub
 		}
@@ -125,5 +129,11 @@ public class FormAluno extends FormPessoaBase {
 		return (txtName.getText().equals("") || 
 				txtEmail.getText().equals("") || 
 				txtRa.getText().equals(""));
+
+	@Override
+	public void LoadTable() {
+		createTable(columns);
+		this.scrollPane.setViewportView(this.tblContent);
+
 	}
 }
