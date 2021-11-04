@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import shared.NumberValidator;
 import shared.forms.FormPessoaBase;
 
 import javax.swing.JOptionPane;
@@ -22,10 +23,12 @@ public class FormAluno extends FormPessoaBase {
 	/**
 	 * Launch the application.
 	 */
-	
+
 	private String RA = "";
 	private JTextField txtRa;
+
 	private String[] columns = {"Id", "Nome", "Email", "RA"};
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -47,15 +50,16 @@ public class FormAluno extends FormPessoaBase {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		setThisTitle("Cadastro de Alunos");
 		getContentPane().setLayout(null);
-		
+
 		JLabel lblRa = new JLabel("RA");
 		lblRa.setBounds(10, 178, 46, 14);
 		getContentPane().add(lblRa);
-		
+
 		txtRa = new JTextField();
+		txtRa.setDocument(new NumberValidator());
 		lblRa.setLabelFor(txtRa);
 		txtRa.setBounds(10, 198, 326, 20);
 		getContentPane().add(txtRa);
@@ -68,39 +72,39 @@ public class FormAluno extends FormPessoaBase {
 	@Override
 	public void BackHome() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void New() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void Edit() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void Cancel() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void Clear() {
 		Name = "";
 		txtName.setText(Name);
-		
+
 		Email = "";
 		txtEmail.setText(Email);
-		
+
 		RA = "";
 		txtRa.setText(RA);
 	}
-	
+
 	@Override
 	public void Create() {
 		if(this.FieldIsEmpty()) {
@@ -108,8 +112,9 @@ public class FormAluno extends FormPessoaBase {
 		}else {
 		// TODO Auto-generated method stub
 		}
+
 	}
-	
+
 	@Override
 	public void Update() {
 		if(this.FieldIsEmpty()) {
@@ -118,11 +123,11 @@ public class FormAluno extends FormPessoaBase {
 		// TODO Auto-generated method stub
 		}
 	}
-	
+
 	@Override
 	public void Remove() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	
 	public boolean FieldIsEmpty() {
