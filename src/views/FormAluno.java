@@ -11,6 +11,9 @@ import javax.swing.border.EmptyBorder;
 import shared.NumberValidator;
 import shared.forms.FormPessoaBase;
 
+import javax.swing.JOptionPane;
+
+
 public class FormAluno extends FormPessoaBase {
 
 	/**
@@ -104,14 +107,21 @@ public class FormAluno extends FormPessoaBase {
 
 	@Override
 	public void Create() {
+		if(this.FieldIsEmpty()) {
+			JOptionPane.showMessageDialog(null, "Um ou mais campos est�o vazios, \n todos os campos s�o obrigat�rios");
+		}else {
 		// TODO Auto-generated method stub
+		}
 
 	}
 
 	@Override
 	public void Update() {
+		if(this.FieldIsEmpty()) {
+			JOptionPane.showMessageDialog(null, "Um ou mais campos est�o vazios, \n todos os campos s�o obrigat�rios");
+		}else {
 		// TODO Auto-generated method stub
-
+		}
 	}
 
 	@Override
@@ -119,10 +129,16 @@ public class FormAluno extends FormPessoaBase {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public boolean FieldIsEmpty() {
+		return (txtName.getText().equals("") || 
+				txtEmail.getText().equals("") || 
+				txtRa.getText().equals(""));
 
 	@Override
 	public void LoadTable() {
 		createTable(columns);
 		this.scrollPane.setViewportView(this.tblContent);
+
 	}
 }
