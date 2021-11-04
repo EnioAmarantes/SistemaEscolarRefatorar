@@ -1,6 +1,5 @@
 package shared.forms;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -24,7 +23,6 @@ public abstract class FormPessoaBase extends FormBase implements ITable {
 	 */
 	public FormPessoaBase() {
 		setBounds(100, 100, 700, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblName = new JLabel("Nome");
 		lblName.setBounds(10, 85, 46, 14);

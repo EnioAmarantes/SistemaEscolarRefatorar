@@ -7,7 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import controllers.AlunoController;
+import models.Aluno;
 import shared.NumberValidator;
 import shared.forms.FormPessoaBase;
 
@@ -22,6 +25,8 @@ public class FormAluno extends FormPessoaBase {
 	/**
 	 * Launch the application.
 	 */
+	
+	AlunoController alunoController = new AlunoController();
 
 	private String RA = "";
 	private JTextField txtRa;
@@ -76,7 +81,10 @@ public class FormAluno extends FormPessoaBase {
 	@Override
 	public void New() {
 		// TODO Auto-generated method stub
-
+		Aluno aluno = fill();
+		alunoController.Cria(aluno);
+		RefreshTable();
+		Clear();
 	}
 
 	@Override
@@ -136,6 +144,37 @@ public class FormAluno extends FormPessoaBase {
 	public void LoadTable() {
 		createTable(columns);
 		this.scrollPane.setViewportView(this.tblContent);
+		
+		RefreshTable();
+	}
+	
+	public Aluno fill() {
+		Name = txtName.getText();
+		Email = txtEmail.getText();
+		RA = txtRa.getText();
+		
+		return new Aluno(1, Name, Email, RA);
+	}
+	
+	public void RefreshTable() {
+		DefaultTableModel model = (DefaultTableModel) this.tblContent.getModel();
 
+        var listaAlunos = alunoController.Lista();
+
+        model.setRowCount(0);
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
+        for (Aluno aluno : listaAlunos) {
+        	
+            model.addRow(new Object[]{
+                aluno.getId(),
+                aluno.getNome(),
+                aluno.getEmail(),
+                aluno.getRegistro_academico()
+            });
+        }
+        
+        listaAlunos.clear();
 	}
 }

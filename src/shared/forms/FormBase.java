@@ -37,7 +37,7 @@ public abstract class FormBase extends JFrame implements IBase {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormBase.class.getResource("/shared/icons/estudando.png")));
 		setPreferredSize(new Dimension(800, 600));
 		setMinimumSize(new Dimension(600, 400));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

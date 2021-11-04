@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StartWindow {
 
@@ -56,6 +58,12 @@ public class StartWindow {
 		panel.setLayout(null);
 		
 		JButton btnAluno = new JButton("Aluno");
+		btnAluno.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FormAluno.main(null);
+			}
+		});
 		btnAluno.setBounds(55, 66, 87, 26);
 		panel.add(btnAluno);
 		
