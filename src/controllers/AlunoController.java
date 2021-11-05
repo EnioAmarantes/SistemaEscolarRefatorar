@@ -21,13 +21,6 @@ public class AlunoController implements IDao<Aluno> {
 		this.alunos.add(new Aluno(1, "Aluno1", "email@email.com.br", "0123456"));
 		this.alunos.add(new Aluno(2, "Aluno2", "email2@email.com.br", "12345"));
 	}
-	
-
-	@Override
-	public boolean is_valid() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean Salvar(Aluno aluno) {
@@ -49,9 +42,7 @@ public class AlunoController implements IDao<Aluno> {
 
 	@Override
 	public boolean Cria(Aluno aluno) {
-		this.alunos.add(aluno);
-		printAlunos();
-		return true;
+		return alunos.add(aluno);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -59,12 +50,6 @@ public class AlunoController implements IDao<Aluno> {
 	public ArrayList<Aluno> Lista() {
 		// TODO Auto-generated method stub
 		return (ArrayList<Aluno>) alunos.clone();
-	}
-	
-	public void printAlunos() {
-		for(Aluno aluno : alunos) {
-			System.out.println(alunos.size() + " " + aluno.getNome());
-		}
 	}
 
 }
