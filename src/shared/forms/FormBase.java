@@ -17,6 +17,7 @@ import lombok.Setter;
 import shared.EMode;
 import shared.IBase;
 import shared.ITable;
+import shared.MessageConfirm;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -134,6 +135,17 @@ public abstract class FormBase extends JFrame implements IBase, ITable {
 		
 		tblContent = new JTable();
 		scrollPane.setViewportView(tblContent);
+		
+		JButton btnRefresh = new JButton("Atualizar");
+		btnRefresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				RefreshTable();
+				MessageConfirm.informDialog("Tabela de Dados Atualizada com Sucesso!");
+			}
+		});
+		btnRefresh.setBounds(389, 10, 285, 29);
+		contentPane.add(btnRefresh);
 	}
 
 	protected void setThisTitle(String title) {
