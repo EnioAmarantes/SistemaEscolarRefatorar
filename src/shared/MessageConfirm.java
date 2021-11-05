@@ -20,9 +20,13 @@ public class MessageConfirm {
         return reply == JOptionPane.YES_OPTION;
 	}
 	
+	public static void informDialog(String msg) {
+		JOptionPane.showMessageDialog(null, msg);
+	}
+	
 	private static void confirm(Component arg0, String msgRemoved, String titleConfirm) {
 		JOptionPane.showMessageDialog(arg0, msgRemoved, titleConfirm, JOptionPane.INFORMATION_MESSAGE);
-		
 	}
+	
 
 }
