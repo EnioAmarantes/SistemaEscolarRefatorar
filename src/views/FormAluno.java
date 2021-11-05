@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.AlunoController;
 import models.Aluno;
+import shared.EMode;
 import shared.NumberValidator;
 import shared.Validator;
 import shared.forms.FormPessoaBase;
@@ -30,15 +31,16 @@ public class FormAluno extends FormPessoaBase {
 	private AlunoController alunoController = new AlunoController();
 
 	private static final String TITLE_ERROR = "Erro com os dados do Aluno";
+	private static final String TITLE_CONFIRM = null;
+	private static final String TITLE_REMOVE = null;
+	
 	private static final String NameError = "Verifique o Nome desse Aluno";
 	private static final String EmailError = "Verifique Email desse Aluno";
 	private static final String RaError = "Verifique o RA desse Aluno";
-	private static final String TITLE_REMOVE = null;
-	private static final String TITLE_CONFIRM = null;
+	
+	private int Id = 0;
 	private String RA = "";
 	private JTextField txtRa;
-
-	private String[] columns = { "Id", "Nome", "Email", "RA" };
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,6 +59,9 @@ public class FormAluno extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormAluno() {
+		String[] alunoColumns = {"Id", "Nome", "Email", "RA"};
+		this.setColumns(alunoColumns);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -71,10 +76,9 @@ public class FormAluno extends FormPessoaBase {
 		txtRa = new JTextField();
 		txtRa.setDocument(new NumberValidator());
 		lblRa.setLabelFor(txtRa);
-		txtRa.setBounds(10, 198, 326, 20);
+		txtRa.setBounds(10, 198, 369, 20);
 		getContentPane().add(txtRa);
 		txtRa.setColumns(10);
-		Name = "Nome do Aluno";
 
 		LoadTable();
 	}
@@ -86,29 +90,48 @@ public class FormAluno extends FormPessoaBase {
 	}
 
 	@Override
-	public void New() {
+	public void Save() {
+		if(state == EMode.New)
+			Create();
+		
+		if(state == EMode.Edit)
+			Update();
+
+		RefreshTable();
+		Clear();			
+	}
+	
+	@Override
+	public void Create() {
 		if(is_valid()) {
 			Aluno aluno = fill();
 			alunoController.Cria(aluno);
-			RefreshTable();
-			Clear();			
 		}
 	}
 
 	@Override
 	public void Edit() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void Cancel() {
-		// TODO Auto-generated method stub
-
+		state = EMode.Edit;
+		
+		int index = tblContent.getSelectedRow();
+		
+		if(index == -1)
+			return;
+		
+		Aluno aluno = getAlunoAt(index);
+		
+		Id = aluno.getId();
+		txtName.setText(aluno.getNome());
+		txtEmail.setText(aluno.getEmail());
+		txtRa.setText(aluno.getRegistro_academico());
 	}
 
 	@Override
 	public void Clear() {
+		state = EMode.New;
+		
+		Id = 0;
+		
 		Name = "";
 		txtName.setText(Name);
 
@@ -120,14 +143,11 @@ public class FormAluno extends FormPessoaBase {
 	}
 
 	@Override
-	public void Create() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void Update() {
-		// TODO Auto-generated method stub
+		if(is_valid()) {
+			Aluno aluno = fill();
+			alunoController.Modificar(aluno);
+		}
 	}
 
 	@Override
@@ -147,8 +167,6 @@ public class FormAluno extends FormPessoaBase {
 			MessageConfirm(msgAlunoRemoved);
 			RefreshTable();
 		}
-		
-
 	}
 
 	private void MessageConfirm(String msgAlunoRemoved) {
@@ -163,43 +181,13 @@ public class FormAluno extends FormPessoaBase {
 		String RA = (String) tblContent.getValueAt(index, tblContent.getColumn("RA").getModelIndex());
 		return new Aluno(id, name, email, RA);
 	}
-
-	@Override
-	public void LoadTable() {
-		createTable(columns);
-		this.scrollPane.setViewportView(this.tblContent);
-		
-		RefreshTable();
-	}
 	
 	public Aluno fill() {
 		Name = txtName.getText();
 		Email = txtEmail.getText();
 		RA = txtRa.getText();
 		
-		return new Aluno(1, Name, Email, RA);
-	}
-	
-	public void RefreshTable() {
-		DefaultTableModel model = (DefaultTableModel) this.tblContent.getModel();
-
-        var listaAlunos = alunoController.Lista();
-
-        model.setRowCount(0);
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
-        
-        for (Aluno aluno : listaAlunos) {
-        	
-            model.addRow(new Object[]{
-                aluno.getId(),
-                aluno.getNome(),
-                aluno.getEmail(),
-                aluno.getRegistro_academico()
-            });
-        }
-        
-        listaAlunos.clear();
+		return new Aluno(Id, Name, Email, RA);
 	}
 
 	@Override
@@ -248,5 +236,22 @@ public class FormAluno extends FormPessoaBase {
 	
 	public void MessageError(String message) {
 		JOptionPane.showMessageDialog(this, message, TITLE_ERROR, JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	@Override
+	public void FillTable(DefaultTableModel model) {
+        var listaAlunos = alunoController.Lista();
+        
+        for (Aluno aluno : listaAlunos) {
+        	
+            model.addRow(new Object[]{
+                aluno.getId(),
+                aluno.getNome(),
+                aluno.getEmail(),
+                aluno.getRegistro_academico()
+            });
+        }
+        
+        listaAlunos.clear();
 	}
 }
