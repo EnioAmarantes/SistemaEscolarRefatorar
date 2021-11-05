@@ -13,13 +13,17 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import lombok.Setter;
+import shared.EMode;
 import shared.IBase;
+import shared.ITable;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.Toolkit;
 import javax.swing.JScrollPane;
 
-public abstract class FormBase extends JFrame implements IBase {
+public abstract class FormBase extends JFrame implements IBase, ITable {
 
 	/**
 	 * 
@@ -29,11 +33,16 @@ public abstract class FormBase extends JFrame implements IBase {
 	private String TITLE = "Title";
 	protected JTable tblContent;
 	protected JScrollPane scrollPane;
+	protected EMode state;
+	@Setter
+	protected String[] columns;
 
 	/**
 	 * Create the frame.
 	 */
 	public FormBase() {
+		state = EMode.New;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormBase.class.getResource("/shared/icons/estudando.png")));
 		setPreferredSize(new Dimension(800, 600));
 		setMinimumSize(new Dimension(600, 400));
@@ -52,7 +61,7 @@ public abstract class FormBase extends JFrame implements IBase {
 			}
 		});
 		btnBack.setOpaque(false);
-		btnBack.setBounds(9, 12, 89, 23);
+		btnBack.setBounds(9, 11, 89, 23);
 		contentPane.add(btnBack);
 		
 		JLabel lblTitle = new JLabel();
@@ -67,83 +76,60 @@ public abstract class FormBase extends JFrame implements IBase {
 		lblTitle.setBounds(9, 46, 330, 37);
 		contentPane.add(lblTitle);
 		
-		JButton btnNew = new JButton("Novo");
+		JButton btnNew = new JButton("Salvar");
+		btnNew.setMinimumSize(new Dimension(80, 23));
+		btnNew.setMaximumSize(new Dimension(80, 23));
 		btnNew.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				New();
+				Save();
 			}
 		});
-		btnNew.setPreferredSize(new Dimension(75, 23));
-		btnNew.setBounds(9, 261, 75, 23);
+		btnNew.setPreferredSize(new Dimension(80, 23));
+		btnNew.setBounds(10, 261, 90, 29);
 		contentPane.add(btnNew);
 		
 		JButton btnEdit = new JButton("Editar");
+		btnEdit.setMinimumSize(new Dimension(80, 23));
+		btnEdit.setMaximumSize(new Dimension(80, 23));
 		btnEdit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Edit();
 			}
 		});
-		btnEdit.setPreferredSize(new Dimension(75, 23));
-		btnEdit.setBounds(94, 261, 75, 23);
+		btnEdit.setPreferredSize(new Dimension(80, 23));
+		btnEdit.setBounds(104, 261, 90, 29);
 		contentPane.add(btnEdit);
 		
-		JButton btnCancel = new JButton("Cancelar");
-		btnCancel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Cancel();
-			}
-		});
-		btnCancel.setBounds(179, 261, 75, 23);
-		contentPane.add(btnCancel);
-		
 		JButton btnClear = new JButton("Limpar");
+		btnClear.setPreferredSize(new Dimension(80, 23));
+		btnClear.setMinimumSize(new Dimension(80, 23));
+		btnClear.setMaximumSize(new Dimension(80, 23));
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Clear();
 			}
 		});
-		btnClear.setBounds(264, 261, 75, 23);
+		btnClear.setBounds(196, 261, 90, 29);
 		contentPane.add(btnClear);
 		
-		JButton btnCreate = new JButton("Criar");
-		btnCreate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Create();
-			}
-		});
-		btnCreate.setPreferredSize(new Dimension(75, 23));
-		btnCreate.setBounds(52, 310, 75, 29);
-		contentPane.add(btnCreate);
-		
-		JButton btnUpdate = new JButton("Atualizar");
-		btnUpdate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Update();
-			}
-		});
-		btnUpdate.setPreferredSize(new Dimension(75, 23));
-		btnUpdate.setBounds(137, 310, 75, 29);
-		contentPane.add(btnUpdate);
-		
 		JButton btnRemove = new JButton("Remover");
+		btnRemove.setMinimumSize(new Dimension(80, 23));
+		btnRemove.setMaximumSize(new Dimension(80, 23));
 		btnRemove.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Remove();
 			}
 		});
-		btnRemove.setPreferredSize(new Dimension(75, 23));
-		btnRemove.setBounds(222, 310, 75, 29);
+		btnRemove.setPreferredSize(new Dimension(80, 23));
+		btnRemove.setBounds(289, 261, 90, 29);
 		contentPane.add(btnRemove);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(349, 46, 325, 304);
+		scrollPane.setBounds(389, 46, 285, 304);
 		contentPane.add(scrollPane);
 		
 		tblContent = new JTable();
@@ -159,4 +145,24 @@ public abstract class FormBase extends JFrame implements IBase {
 		Object[][] data = {};
 		this.tblContent.setModel(new DefaultTableModel(data, columns));
 	}
+	
+	public void LoadTable() {
+		createTable(columns);
+		this.scrollPane.setViewportView(this.tblContent);
+		
+		RefreshTable();
+	}
+	
+	public void RefreshTable() {
+		DefaultTableModel model = (DefaultTableModel) this.tblContent.getModel();
+		
+        model.setRowCount(0);
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
+        FillTable(model);
+        
+        state = EMode.New;
+	}
+	
 }

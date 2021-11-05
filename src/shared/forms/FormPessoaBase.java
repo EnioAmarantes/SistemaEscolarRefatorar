@@ -8,7 +8,7 @@ import shared.ITable;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public abstract class FormPessoaBase extends FormBase implements ITable {
+public abstract class FormPessoaBase extends FormBase {
 	/**
 	 * 
 	 */
@@ -35,7 +35,7 @@ public abstract class FormPessoaBase extends FormBase implements ITable {
 			}
 		});
 		lblName.setLabelFor(txtName);
-		txtName.setBounds(10, 101, 326, 20);
+		txtName.setBounds(10, 101, 369, 20);
 		getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
@@ -51,7 +51,7 @@ public abstract class FormPessoaBase extends FormBase implements ITable {
 			}
 		});
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(10, 148, 326, 20);
+		txtEmail.setBounds(10, 148, 369, 20);
 		getContentPane().add(txtEmail);
 		
 
