@@ -27,12 +27,14 @@ public class FormAluno extends FormPessoaBase {
 	 * Launch the application.
 	 */
 	
-	AlunoController alunoController = new AlunoController();
+	private AlunoController alunoController = new AlunoController();
 
 	private static final String TITLE_ERROR = "Erro com os dados do Aluno";
 	private static final String NameError = "Verifique o Nome desse Aluno";
 	private static final String EmailError = "Verifique Email desse Aluno";
 	private static final String RaError = "Verifique o RA desse Aluno";
+	private static final String TITLE_REMOVE = null;
+	private static final String TITLE_CONFIRM = null;
 	private String RA = "";
 	private JTextField txtRa;
 
@@ -130,8 +132,36 @@ public class FormAluno extends FormPessoaBase {
 
 	@Override
 	public void Remove() {
-		// TODO Auto-generated method stub
+		int index = tblContent.getSelectedRow();
+		
+		if(index == -1)
+			return;
+		
+		Aluno aluno = getAlunoAt(index);
+		String msgRemoverAluno = "Deseja Remover o aluno " + aluno.getNome() + "?";
+		
+		int dialogResult = JOptionPane.showConfirmDialog(null, msgRemoverAluno, TITLE_REMOVE, JOptionPane.YES_NO_OPTION);
+		
+		if(dialogResult == JOptionPane.YES_OPTION) {
+			String msgAlunoRemoved = "Aluno " + alunoController.Excluir(aluno).getNome() + "removido com sucesso!";
+			MessageConfirm(msgAlunoRemoved);
+			RefreshTable();
+		}
+		
 
+	}
+
+	private void MessageConfirm(String msgAlunoRemoved) {
+		JOptionPane.showMessageDialog(this, msgAlunoRemoved, TITLE_CONFIRM, JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+
+	private Aluno getAlunoAt(int index) {
+		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
+		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
+		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
+		String RA = (String) tblContent.getValueAt(index, tblContent.getColumn("RA").getModelIndex());
+		return new Aluno(id, name, email, RA);
 	}
 
 	@Override
