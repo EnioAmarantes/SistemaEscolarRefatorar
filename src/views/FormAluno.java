@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.AlunoController;
 import models.Aluno;
+import shared.MessageConfirm;
 import shared.EMode;
 import shared.NumberValidator;
 import shared.Validator;
@@ -96,9 +97,7 @@ public class FormAluno extends FormPessoaBase {
 		
 		if(state == EMode.Edit)
 			Update();
-
-		RefreshTable();
-		Clear();			
+		
 	}
 	
 	@Override
@@ -106,6 +105,8 @@ public class FormAluno extends FormPessoaBase {
 		if(is_valid()) {
 			Aluno aluno = fill();
 			alunoController.Cria(aluno);
+			RefreshTable();
+			Clear();	
 		}
 	}
 
@@ -115,8 +116,10 @@ public class FormAluno extends FormPessoaBase {
 		
 		int index = tblContent.getSelectedRow();
 		
-		if(index == -1)
+		if(index == -1) {
+			Clear();	
 			return;
+		}
 		
 		Aluno aluno = getAlunoAt(index);
 		
@@ -147,6 +150,8 @@ public class FormAluno extends FormPessoaBase {
 		if(is_valid()) {
 			Aluno aluno = fill();
 			alunoController.Modificar(aluno);
+			RefreshTable();
+			Clear();	
 		}
 	}
 
@@ -157,22 +162,16 @@ public class FormAluno extends FormPessoaBase {
 		if(index == -1)
 			return;
 		
-		Aluno aluno = getAlunoAt(index);
+		Aluno aluno = getAlunoAt(index);		
 		String msgRemoverAluno = "Deseja Remover o aluno " + aluno.getNome() + "?";
-		
-		int dialogResult = JOptionPane.showConfirmDialog(null, msgRemoverAluno, TITLE_REMOVE, JOptionPane.YES_NO_OPTION);
-		
-		if(dialogResult == JOptionPane.YES_OPTION) {
-			String msgAlunoRemoved = "Aluno " + alunoController.Excluir(aluno).getNome() + "removido com sucesso!";
-			MessageConfirm(msgAlunoRemoved);
+		String msgAlunoRemoved = "Aluno " + aluno.getNome() + " removido com sucesso!";
+		if(MessageConfirm.confirmDialog(this,  msgRemoverAluno, TITLE_REMOVE, msgAlunoRemoved, TITLE_CONFIRM)) {
+			alunoController.Excluir(aluno);
 			RefreshTable();
 		}
-	}
-
-	private void MessageConfirm(String msgAlunoRemoved) {
-		JOptionPane.showMessageDialog(this, msgAlunoRemoved, TITLE_CONFIRM, JOptionPane.INFORMATION_MESSAGE);
 		
 	}
+
 
 	private Aluno getAlunoAt(int index) {
 		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
