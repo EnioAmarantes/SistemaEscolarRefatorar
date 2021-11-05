@@ -1,11 +1,9 @@
 package shared;
 
-import java.util.ArrayList;
+import java.sql.Connection;
 
-public interface IDatabase<IModel> extends IValidator {
-	public boolean Salvar(IModel model);
-	public boolean Excluir(IModel model);
-	public boolean Modificar(IModel model);
-	public boolean Cria(IModel model);
-	public ArrayList<IModel> Lista();
+public interface IDatabase {
+	public static Connection getConnection() {
+		return null;
+	}
 }

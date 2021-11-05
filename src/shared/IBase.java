@@ -1,6 +1,6 @@
 package shared;
 
-public interface IBase {
+public interface IBase extends IValidator {
 	public void BackHome();
 	public void New();
 	public void Edit();

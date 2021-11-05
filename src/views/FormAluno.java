@@ -7,8 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import controllers.AlunoController;
+import models.Aluno;
 import shared.NumberValidator;
+import shared.Validator;
 import shared.forms.FormPessoaBase;
 
 import javax.swing.JOptionPane;
@@ -22,7 +26,13 @@ public class FormAluno extends FormPessoaBase {
 	/**
 	 * Launch the application.
 	 */
+	
+	AlunoController alunoController = new AlunoController();
 
+	private static final String TITLE_ERROR = "Erro com os dados do Aluno";
+	private static final String NameError = "Verifique o Nome desse Aluno";
+	private static final String EmailError = "Verifique Email desse Aluno";
+	private static final String RaError = "Verifique o RA desse Aluno";
 	private String RA = "";
 	private JTextField txtRa;
 
@@ -75,8 +85,12 @@ public class FormAluno extends FormPessoaBase {
 
 	@Override
 	public void New() {
-		// TODO Auto-generated method stub
-
+		if(is_valid()) {
+			Aluno aluno = fill();
+			alunoController.Cria(aluno);
+			RefreshTable();
+			Clear();			
+		}
 	}
 
 	@Override
@@ -105,21 +119,13 @@ public class FormAluno extends FormPessoaBase {
 
 	@Override
 	public void Create() {
-		if (this.FieldIsEmpty()) {
-			JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios, \n todos os campos são obrigatórios");
-		} else {
-			// TODO Auto-generated method stub
-		}
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void Update() {
-		if (this.FieldIsEmpty()) {
-			JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios, \n todos os campos são obrigatórios");
-		} else {
-			// TODO Auto-generated method stub
-		}
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -128,14 +134,89 @@ public class FormAluno extends FormPessoaBase {
 
 	}
 
-	public boolean FieldIsEmpty() {
-		return (txtName.getText().equals("") || txtEmail.getText().equals("") || txtRa.getText().equals(""));
-	}
-
 	@Override
 	public void LoadTable() {
 		createTable(columns);
 		this.scrollPane.setViewportView(this.tblContent);
+		
+		RefreshTable();
+	}
+	
+	public Aluno fill() {
+		Name = txtName.getText();
+		Email = txtEmail.getText();
+		RA = txtRa.getText();
+		
+		return new Aluno(1, Name, Email, RA);
+	}
+	
+	public void RefreshTable() {
+		DefaultTableModel model = (DefaultTableModel) this.tblContent.getModel();
 
+        var listaAlunos = alunoController.Lista();
+
+        model.setRowCount(0);
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
+        for (Aluno aluno : listaAlunos) {
+        	
+            model.addRow(new Object[]{
+                aluno.getId(),
+                aluno.getNome(),
+                aluno.getEmail(),
+                aluno.getRegistro_academico()
+            });
+        }
+        
+        listaAlunos.clear();
+	}
+
+	@Override
+	public boolean is_valid() {
+		// TODO Auto-generated method stub
+		boolean isValid = true;
+		
+		isValid &= NameIsValid();
+		
+		isValid &= EmailIsValid();
+		
+		isValid &= RaIsValid();
+		
+		return isValid;
+	}
+	private boolean NameIsValid() {
+	
+		if(!Validator.ValidName(txtName.getText())) {
+			MessageError(RaError);
+			txtName.requestFocus();
+			return false;
+		}
+		return true;
+	}
+
+
+	private boolean EmailIsValid() {
+		
+		if(!Validator.ValidEmail(txtEmail.getText())) {
+			MessageError(EmailError);
+			txtEmail.requestFocus();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean RaIsValid() {
+		
+		if(!Validator.ValidNumber(txtRa.getText())) {
+			MessageError(NameError);
+			txtRa.requestFocus();
+			return false;
+		}
+		return true;
+	}
+	
+	public void MessageError(String message) {
+		JOptionPane.showMessageDialog(this, message, TITLE_ERROR, JOptionPane.INFORMATION_MESSAGE);
 	}
 }
