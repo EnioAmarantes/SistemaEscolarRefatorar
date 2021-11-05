@@ -206,7 +206,7 @@ public class FormAluno extends FormPessoaBase {
 	private boolean NameIsValid() {
 	
 		if(!Validator.ValidName(txtName.getText())) {
-			MessageError(RaError);
+			MessageError(NameError);
 			txtName.requestFocus();
 			return false;
 		}
@@ -227,7 +227,7 @@ public class FormAluno extends FormPessoaBase {
 	private boolean RaIsValid() {
 		
 		if(!Validator.ValidNumber(txtRa.getText())) {
-			MessageError(NameError);
+			MessageError(RaError);
 			txtRa.requestFocus();
 			return false;
 		}
