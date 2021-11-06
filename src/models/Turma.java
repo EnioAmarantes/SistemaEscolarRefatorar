@@ -23,6 +23,6 @@ public class Turma extends AModel{
 	private ArrayList<Aluno> alunos;
 	
 	public boolean matricularAluno(Aluno aluno) {
-		return false;
+		return alunos.add(aluno);
 	}
 }
