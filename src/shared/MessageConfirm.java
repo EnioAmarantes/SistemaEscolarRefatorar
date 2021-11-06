@@ -29,7 +29,7 @@ public class MessageConfirm {
 	}
 	
 	private static void confirm(Component arg0, String msgRemoved, String titleConfirm) {
-		JOptionPane.showMessageDialog(arg0, msgRemoved, titleConfirm, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(arg0,  titleConfirm, msgRemoved, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 }
