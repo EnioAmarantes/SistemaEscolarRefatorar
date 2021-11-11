@@ -14,8 +14,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lombok.Setter;
+import models.Aluno;
+import shared.AModel;
 import shared.EMode;
 import shared.IBase;
+import shared.IDao;
 import shared.ITable;
 import shared.MessageConfirm;
 
@@ -26,7 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
-public abstract class FormBase extends JFrame implements IBase, ITable {
+public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 
 	/**
 	 * 
@@ -39,6 +42,7 @@ public abstract class FormBase extends JFrame implements IBase, ITable {
 	protected EMode state;
 	@Setter
 	protected String[] columns;
+	protected IDao<AModel> controller;
 
 	/**
 	 * Create the frame.
@@ -182,4 +186,53 @@ public abstract class FormBase extends JFrame implements IBase, ITable {
         state = EMode.New;
 	}
 	
+	@Override
+	public void Save() {
+		if(state == EMode.New)
+			Create();
+		
+		if(state == EMode.Edit)
+			Update();
+	}
+	
+	@Override
+	public void Create() {
+		if(is_valid()) {
+			AModel model = fill();
+			controller.Cria(model);
+			RefreshTable();
+			Clear();	
+		}
+	}
+	
+	@Override
+	public void Edit() {
+		state = EMode.Edit;
+		
+		int index = tblContent.getSelectedRow();
+		
+		if(index == -1) {
+			Clear();	
+			return;
+		}
+		
+		AModel model = getAt(index);
+		
+		fill(model);
+	}
+	
+	@Override
+	public void Update() {
+		if(is_valid()) {
+			AModel model = fill();
+			controller.Modificar(model);
+			RefreshTable();
+			Clear();	
+		}
+	}
+	
+	protected abstract AModel fill();
+	protected abstract void fill(AModel model);
+	protected abstract AModel getAt(int index);
+	public abstract void Clear();
 }
