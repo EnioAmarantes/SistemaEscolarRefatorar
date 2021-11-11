@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.TerceiroController;
 import models.Terceiro;
+import shared.APessoa;
 import shared.EMode;
 import shared.MessageConfirm;
 import shared.NumberValidator;
@@ -97,45 +98,6 @@ public class FormTerceiro extends FormPessoaBase {
 	}
 
 	@Override
-	public void Save() {
-		if(state == EMode.New)
-			Create();
-		
-		if(state == EMode.Edit)
-			Update();
-		
-	}
-	
-	@Override
-	public void Create() {
-		if(is_valid()) {
-			Terceiro terceiro = fill();
-			terceiroController.Cria(terceiro);
-			RefreshTable();
-			Clear();	
-		}
-	}
-
-	@Override
-	public void Edit() {
-		state = EMode.Edit;
-		
-		int index = tblContent.getSelectedRow();
-		
-		if(index == -1) {
-			Clear();	
-			return;
-		}
-		
-		Terceiro terceiro = getTerceiroAt(index);
-		
-		Id = terceiro.getId();
-		txtName.setText(terceiro.getNome());
-		txtEmail.setText(terceiro.getEmail());
-		txtFunc.setText(terceiro.getFuncao());
-	}
-
-	@Override
 	public void Clear() {
 		state = EMode.New;
 		
@@ -152,23 +114,13 @@ public class FormTerceiro extends FormPessoaBase {
 	}
 
 	@Override
-	public void Update() {
-		if(is_valid()) {
-			Terceiro terceiro = fill();
-			terceiroController.Modificar(terceiro);
-			RefreshTable();
-			Clear();	
-		}
-	}
-
-	@Override
 	public void Remove() {
 		int index = tblContent.getSelectedRow();
 		
 		if(index == -1)
 			return;
 		
-		Terceiro terceiro = getTerceiroAt(index);		
+		Terceiro terceiro = getAt(index);		
 		String msgRemoverTerceiro = "Deseja Remover o terceiro " + terceiro.getNome() + "?";
 		String msgTerceiroRemoved = "Terceiro " + terceiro.getNome() + " removido com sucesso!";
 		if(MessageConfirm.confirmDialog(this,  msgRemoverTerceiro, TITLE_REMOVE, msgTerceiroRemoved, TITLE_CONFIRM)) {
@@ -179,7 +131,7 @@ public class FormTerceiro extends FormPessoaBase {
 	}
 
 
-	private Terceiro getTerceiroAt(int index) {
+	protected Terceiro getAt(int index) {
 		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
 		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
 		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
@@ -193,6 +145,15 @@ public class FormTerceiro extends FormPessoaBase {
 		Funcao = txtFunc.getText();
 		
 		return new Terceiro(Id, Name, Email, Funcao);
+	}
+	
+	@Override
+	protected void fill(APessoa model) {
+		Terceiro terceiro = (Terceiro) model;
+		Id = terceiro.getId();
+		txtName.setText(terceiro.getNome());
+		txtEmail.setText(terceiro.getEmail());
+		txtFunc.setText(terceiro.getFuncao());
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.ProfessorController;
 import models.Professor;
+import shared.APessoa;
 import shared.EMode;
 import shared.MessageConfirm;
 import shared.Validator;
@@ -109,7 +110,7 @@ public class FormProfessor extends FormPessoaBase {
 		if(index == -1)
 			return;
 		
-		Professor professor = getProfessorAt(index);		
+		Professor professor = getAt(index);		
 		String msgRemoverProfessor = "Deseja Remover o professor " + professor.getNome() + "?";
 		String msgProfessorRemoved = "Aluno " + professor.getNome() + " removido com sucesso!";
 		if(MessageConfirm.confirmDialog(this,  msgRemoverProfessor, TITLE_REMOVE, msgProfessorRemoved, TITLE_CONFIRM)) {
