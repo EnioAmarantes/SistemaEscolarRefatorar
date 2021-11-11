@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class Validator {
 
 	public static boolean ValidName(String name) {
-		return !name.isBlank() && !name.isEmpty();
+		return name != null && !name.isBlank() && !name.isEmpty();
 	}
 	
 	public static boolean ValidEmail(String email) {

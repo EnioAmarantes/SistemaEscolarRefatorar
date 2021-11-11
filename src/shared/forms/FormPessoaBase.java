@@ -3,12 +3,12 @@ package shared.forms;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import shared.ITable;
+import shared.APessoa;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public abstract class FormPessoaBase extends FormBase {
+public abstract class FormPessoaBase extends FormBase<APessoa> {
 	/**
 	 * 
 	 */
@@ -53,7 +53,6 @@ public abstract class FormPessoaBase extends FormBase {
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(10, 148, 369, 20);
 		getContentPane().add(txtEmail);
-		
-
+	
 	}
 }

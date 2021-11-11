@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import controllers.AlunoController;
 import models.Aluno;
 import shared.MessageConfirm;
+import shared.AModel;
+import shared.APessoa;
 import shared.EMode;
 import shared.NumberValidator;
 import shared.Validator;
@@ -91,45 +93,6 @@ public class FormAluno extends FormPessoaBase {
 	}
 
 	@Override
-	public void Save() {
-		if(state == EMode.New)
-			Create();
-		
-		if(state == EMode.Edit)
-			Update();
-		
-	}
-	
-	@Override
-	public void Create() {
-		if(is_valid()) {
-			Aluno aluno = fill();
-			alunoController.Cria(aluno);
-			RefreshTable();
-			Clear();	
-		}
-	}
-
-	@Override
-	public void Edit() {
-		state = EMode.Edit;
-		
-		int index = tblContent.getSelectedRow();
-		
-		if(index == -1) {
-			Clear();	
-			return;
-		}
-		
-		Aluno aluno = getAlunoAt(index);
-		
-		Id = aluno.getId();
-		txtName.setText(aluno.getNome());
-		txtEmail.setText(aluno.getEmail());
-		txtRa.setText(aluno.getRegistro_academico());
-	}
-
-	@Override
 	public void Clear() {
 		state = EMode.New;
 		
@@ -146,23 +109,13 @@ public class FormAluno extends FormPessoaBase {
 	}
 
 	@Override
-	public void Update() {
-		if(is_valid()) {
-			Aluno aluno = fill();
-			alunoController.Modificar(aluno);
-			RefreshTable();
-			Clear();	
-		}
-	}
-
-	@Override
 	public void Remove() {
 		int index = tblContent.getSelectedRow();
 		
 		if(index == -1)
 			return;
 		
-		Aluno aluno = getAlunoAt(index);		
+		Aluno aluno = getAt(index);		
 		String msgRemoverAluno = "Deseja Remover o aluno " + aluno.getNome() + "?";
 		String msgAlunoRemoved = "Aluno " + aluno.getNome() + " removido com sucesso!";
 		if(MessageConfirm.confirmDialog(this,  msgRemoverAluno, TITLE_REMOVE, msgAlunoRemoved, TITLE_CONFIRM)) {
@@ -172,8 +125,7 @@ public class FormAluno extends FormPessoaBase {
 		
 	}
 
-
-	private Aluno getAlunoAt(int index) {
+	protected Aluno getAt(int index) {
 		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
 		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
 		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
@@ -188,6 +140,16 @@ public class FormAluno extends FormPessoaBase {
 		
 		return new Aluno(Id, Name, Email, RA);
 	}
+	
+	@Override
+	protected void fill(APessoa model) {
+		Aluno aluno = (Aluno) model;
+		Id = aluno.getId();
+		txtName.setText(aluno.getNome());
+		txtEmail.setText(aluno.getEmail());
+		txtRa.setText(aluno.getRegistro_academico());
+	}
+	
 
 	@Override
 	public boolean is_valid() {
@@ -253,4 +215,5 @@ public class FormAluno extends FormPessoaBase {
         
         listaAlunos.clear();
 	}
+
 }
