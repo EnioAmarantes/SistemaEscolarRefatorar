@@ -87,44 +87,6 @@ public class FormProfessor extends FormPessoaBase {
 	}
 
 	@Override
-	public void Save() {
-		if(state == EMode.New)
-			Create();
-		
-		if(state == EMode.Edit)
-			Update();
-	}
-
-	@Override
-	public void Create() {
-		if(is_valid()) {
-			Professor professor = fill();
-			professorController.Cria(professor);
-			RefreshTable();
-			Clear();	
-		}
-	}
-
-	@Override
-	public void Edit() {
-		state = EMode.Edit;
-		
-		int index = tblContent.getSelectedRow();
-		
-		if(index == -1) {
-			Clear();	
-			return;
-		}
-		
-		Professor professor = getProfessorAt(index);
-		
-		Id = professor.getId();
-		txtName.setText(professor.getNome());
-		txtEmail.setText(professor.getEmail());
-		txtDisciplina.setText(professor.getDisciplina());
-	}
-
-	@Override
 	public void Clear() {
 		state = EMode.New;
 		
@@ -138,16 +100,6 @@ public class FormProfessor extends FormPessoaBase {
 
 		Disciplina = "";
 		txtDisciplina.setText(Disciplina);
-	}
-
-	@Override
-	public void Update() {
-		if(is_valid()) {
-			Professor professor = fill();
-			professorController.Modificar(professor);
-			RefreshTable();
-			Clear();	
-		}
 	}
 
 	@Override
@@ -196,7 +148,7 @@ public class FormProfessor extends FormPessoaBase {
         listaProfessores.clear();
 	}
 	
-	private Professor getProfessorAt(int index) {
+	protected Professor getAt(int index) {
 		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
 		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
 		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
@@ -210,6 +162,15 @@ public class FormProfessor extends FormPessoaBase {
 		Disciplina = txtDisciplina.getText();
 		
 		return new Professor(Id, Name, Email, Disciplina);
+	}
+	
+	@Override
+	protected void fill(APessoa model) {
+		Professor professor = (Professor) model;
+		Id = professor.getId();
+		txtName.setText(professor.getNome());
+		txtEmail.setText(professor.getEmail());
+		txtDisciplina.setText(professor.getDisciplina());
 	}
 	
 	private boolean NameIsValid() {
