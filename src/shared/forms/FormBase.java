@@ -26,6 +26,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.Toolkit;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 
@@ -59,6 +61,9 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		contentPane.setLayout(null);
 		
 		JButton btnBack = new JButton("Voltar");
+		btnBack.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnBack.setIcon(new ImageIcon(FormBase.class.getResource("/shared/icons/setap.png")));
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -66,7 +71,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 			}
 		});
 		btnBack.setOpaque(false);
-		btnBack.setBounds(9, 11, 89, 23);
+		btnBack.setBounds(9, 11, 114, 37);
 		contentPane.add(btnBack);
 		
 		JLabel lblTitle = new JLabel();

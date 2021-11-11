@@ -24,9 +24,12 @@ public class MessageConfirm {
 		JOptionPane.showMessageDialog(null, msg);
 	}
 	
-	private static void confirm(Component arg0, String msgRemoved, String titleConfirm) {
-		JOptionPane.showMessageDialog(arg0, msgRemoved, titleConfirm, JOptionPane.INFORMATION_MESSAGE);
+	public static void messageError(String msg, String title) {
+		JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-
+	private static void confirm(Component arg0, String msgRemoved, String titleConfirm) {
+		JOptionPane.showMessageDialog(arg0,  titleConfirm, msgRemoved, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 }

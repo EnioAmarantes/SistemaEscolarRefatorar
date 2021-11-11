@@ -13,6 +13,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class StartWindow {
 
@@ -72,6 +74,11 @@ public class StartWindow {
 		panel.add(btnTurma);
 		
 		JButton btnProfessor = new JButton("Professor");
+		btnProfessor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormProfessor.main(null);
+			}
+		});
 		btnProfessor.setBounds(55, 97, 87, 26);
 		panel.add(btnProfessor);
 		
