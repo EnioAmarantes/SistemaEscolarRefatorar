@@ -115,7 +115,7 @@ public class FormProfessor extends FormPessoaBase {
 		
 		Professor professor = getAt(index);		
 		String msgRemoverProfessor = "Deseja Remover o professor " + professor.getNome() + "?";
-		String msgProfessorRemoved = "Aluno " + professor.getNome() + " removido com sucesso!";
+		String msgProfessorRemoved = "Professor " + professor.getNome() + " removido com sucesso!";
 		if(MessageConfirm.confirmDialog(this,  msgRemoverProfessor, TITLE_REMOVE, msgProfessorRemoved, TITLE_CONFIRM)) {
 			professorController.Excluir(professor);
 			RefreshTable();
@@ -200,7 +200,7 @@ public class FormProfessor extends FormPessoaBase {
 		
 		for(Professor professor : professores) {
 			if(professor.getEmail().equals(email)) {
-				ERROR_MESSAGE = "O email " + email + " já está cadastrado";
+				ERROR_MESSAGE = "O email " + email + " jï¿½ estï¿½ cadastrado";
 				return false;
 			}
 		}

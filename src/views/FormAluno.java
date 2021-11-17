@@ -189,7 +189,7 @@ public class FormAluno extends FormPessoaBase {
 		
 		for(Aluno aluno : alunos) {
 			if(aluno.getEmail().equals(email)) {
-				ERROR_MESSAGE = "O email " + email + " já está cadastrado";
+				ERROR_MESSAGE = "O email " + email + " jï¿½ estï¿½ cadastrado";
 				return false;
 			}
 		}
@@ -209,7 +209,7 @@ public class FormAluno extends FormPessoaBase {
 		
 		for(Aluno aluno : alunos) {
 			if(aluno.getRegistro_academico().equals(RA)) {
-				ERROR_MESSAGE = "O RA " + RA + " já está cadastrado";
+				ERROR_MESSAGE = "O RA " + RA + " jï¿½ estï¿½ cadastrado";
 				return false;
 			}
 		}

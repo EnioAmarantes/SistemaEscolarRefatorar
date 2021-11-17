@@ -45,7 +45,7 @@ public class FormTerceiro extends FormPessoaBase {
 	
 	private static final String NameError = "Verifique o Nome desse Terceiro";
 	private static final String EmailError = "Verifique Email desse Terceiro";
-	private static final String RaError = "Verifique a FunÁ„o desse Terceiro";
+	private static final String RaError = "Verifique a Fun√ß√£o desse Terceiro";
 	
 	private int Id = 0;
 	private String Funcao = "";
@@ -80,7 +80,7 @@ public class FormTerceiro extends FormPessoaBase {
 		setThisTitle("Cadastro de Terceiros");
 		getContentPane().setLayout(null);
 
-		JLabel lblRa = new JLabel("FunÁ„o");
+		JLabel lblRa = new JLabel("Fun√ß√£o");
 		lblRa.setBounds(10, 178, 46, 14);
 		getContentPane().add(lblRa);
 		
@@ -196,7 +196,7 @@ public class FormTerceiro extends FormPessoaBase {
 		
 		for(Terceiro terceiro : terceiros) {
 			if(terceiro.getEmail().equals(email)) {
-				ERROR_MESSAGE = "O email " + email + " j· est· cadastrado";
+				ERROR_MESSAGE = "O email " + email + " j√° est√° cadastrado";
 				return false;
 			}
 		}
