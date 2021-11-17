@@ -88,25 +88,25 @@ public class TerceiroController implements IDao<Terceiro> {
 	
 	@Override
 	public boolean Cria(Terceiro terceiro) {
-		 try {
-	            connection = MySqlDatabase.getConnection();
-				pstdados = (PreparedStatement) connection.prepareStatement(sqlinserir, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-	            connection.setAutoCommit(false);
-	            this.prepStatSet(terceiro);
-
-	            pstdados.executeUpdate();
-				connection.commit();
-				return terceiros.add(terceiro);
+		boolean criaStatus = IsValid(terceiro); 
+		if(criaStatus) {
+			try {
+		            connection = MySqlDatabase.getConnection();
+					pstdados = (PreparedStatement) connection.prepareStatement(
+							sqlinserir, 
+							ResultSet.TYPE_SCROLL_SENSITIVE, 
+							ResultSet.CONCUR_UPDATABLE);
+		            connection.setAutoCommit(false);
+		            this.prepStatSet(terceiro);
+		            pstdados.executeUpdate();
+					connection.commit();
+					criaStatus = terceiros.add(terceiro);
 	        } catch (SQLException ex) {
 	            ex.printStackTrace();
 	            return false;
 	        }
 
-		boolean criaStatus = IsValid(terceiro);
-		
-		if(criaStatus)
-		criaStatus = terceiros.add(terceiro);
-		
+		}
 		return criaStatus;
 
 	}

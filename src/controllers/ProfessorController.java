@@ -90,26 +90,24 @@ public class ProfessorController implements IDao<Professor> {
 
 	@Override
 	public boolean Cria(Professor professor) {
-		try {
-			connection = MySqlDatabase.getConnection();
-			pstdados = (PreparedStatement) connection.prepareStatement(sqlinserir, ResultSet.TYPE_SCROLL_SENSITIVE,
-					ResultSet.CONCUR_UPDATABLE);
-			connection.setAutoCommit(false);
-			this.prepStatSet(professor);
-
-			pstdados.executeUpdate();
-			connection.commit();
-			return professores.add(professor);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			return false;
-		}
-
 		boolean criaStatus = IsValid(professor);
-		
-		if(criaStatus)
-		criaStatus = professores.add(professor);
-		
+		if(criaStatus) {
+			try {
+				connection = MySqlDatabase.getConnection();
+				pstdados = (PreparedStatement) connection.prepareStatement(
+						sqlinserir, 
+						ResultSet.TYPE_SCROLL_SENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);
+				connection.setAutoCommit(false);
+				this.prepStatSet(professor);
+				pstdados.executeUpdate();
+				connection.commit();
+				criaStatus = professores.add(professor);
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+				return false;
+			}
+		}
 		return criaStatus;
 
 	}
