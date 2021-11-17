@@ -43,6 +43,11 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 	protected JTable tblContent;
 	protected JScrollPane scrollPane;
 	protected EMode state;
+	protected JButton btnRefresh;
+	protected JButton btnRemove;
+	protected JButton btnNew;
+	protected JButton btnEdit;
+	protected JButton btnClear;
 	@Setter
 	protected String[] columns;
 	protected IDao controller;
@@ -54,7 +59,6 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		state = EMode.New;
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormBase.class.getResource("/shared/icons/estudando.png")));
-		setPreferredSize(new Dimension(800, 600));
 		setMinimumSize(new Dimension(600, 400));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 700, 400);
@@ -89,7 +93,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		lblTitle.setBounds(9, 46, 330, 37);
 		contentPane.add(lblTitle);
 		
-		JButton btnNew = new JButton("Salvar");
+		btnNew = new JButton("Salvar");
 		btnNew.setMinimumSize(new Dimension(80, 23));
 		btnNew.setMaximumSize(new Dimension(80, 23));
 		btnNew.addMouseListener(new MouseAdapter() {
@@ -102,7 +106,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		btnNew.setBounds(10, 261, 90, 29);
 		contentPane.add(btnNew);
 		
-		JButton btnEdit = new JButton("Editar");
+		btnEdit = new JButton("Editar");
 		btnEdit.setMinimumSize(new Dimension(80, 23));
 		btnEdit.setMaximumSize(new Dimension(80, 23));
 		btnEdit.addMouseListener(new MouseAdapter() {
@@ -115,7 +119,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		btnEdit.setBounds(104, 261, 90, 29);
 		contentPane.add(btnEdit);
 		
-		JButton btnClear = new JButton("Limpar");
+		btnClear = new JButton("Limpar");
 		btnClear.setPreferredSize(new Dimension(80, 23));
 		btnClear.setMinimumSize(new Dimension(80, 23));
 		btnClear.setMaximumSize(new Dimension(80, 23));
@@ -128,7 +132,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		btnClear.setBounds(196, 261, 90, 29);
 		contentPane.add(btnClear);
 		
-		JButton btnRemove = new JButton("Remover");
+		btnRemove = new JButton("Remover");
 		btnRemove.setMinimumSize(new Dimension(80, 23));
 		btnRemove.setMaximumSize(new Dimension(80, 23));
 		btnRemove.addMouseListener(new MouseAdapter() {
@@ -148,7 +152,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		tblContent = new JTable();
 		scrollPane.setViewportView(tblContent);
 		
-		JButton btnRefresh = new JButton("Atualizar");
+		btnRefresh = new JButton("Atualizar");
 		btnRefresh.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -170,6 +174,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		this.tblContent.setModel(new DefaultTableModel(data, columns));
 	}
 	
+	@Override
 	public void LoadTable() {
 		createTable(columns);
 		this.scrollPane.setViewportView(this.tblContent);
