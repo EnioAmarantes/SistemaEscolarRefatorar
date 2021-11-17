@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import models.Terceiro;
 import shared.ADatabase;
 import shared.IDao;
+import shared.consts.Config;
 import shared.database.MySqlDatabase;
 
 /**
@@ -34,10 +35,8 @@ public class TerceiroController implements IDao<Terceiro> {
     private static final String sqlexcluir = "DELETE FROM terceiro WHERE id_terceiro = ?";
 	
 	public TerceiroController() {
-		String path = System.getProperty("user.dir");
-        File fileName = new File(path + "/src/shared/database/configBd.properties");
 		try {
-			ADatabase.init(fileName);
+			ADatabase.init(Config.PATHDB);
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

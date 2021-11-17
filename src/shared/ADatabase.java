@@ -22,7 +22,6 @@ public abstract class ADatabase implements IDatabase {
         FileInputStream in = new FileInputStream(fileName);
         props.load(in);
         String driver = props.getProperty("jdbc.driver");
-        System.out.println(driver);
         url = props.getProperty("jdbc.url");
         username = props.getProperty("jdbc.username");
         if (username == null) {
