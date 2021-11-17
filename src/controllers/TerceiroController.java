@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import models.Professor;
 import models.Terceiro;
 import shared.ADatabase;
 import shared.IDao;
@@ -32,7 +31,7 @@ public class TerceiroController implements IDao<Terceiro> {
 	private static final String sqlconsulta = "SELECT * FROM terceiro order by id_terceiro";
 	private static final String sqlinserir = "INSERT INTO terceiro (nome, email, funcao) VALUES ( ?, ?, ?)";
     private static final String sqlalterar = "UPDATE terceiro SET nome = ?, email = ?, funcao = ? WHERE id_terceiro = ?";
-    private static final String sqlaexcluir = "DELETE FROM terceiro WHERE id_terceiro = ?";
+    private static final String sqlexcluir = "DELETE FROM terceiro WHERE id_terceiro = ?";
 	
 	public TerceiroController() {
 		String path = System.getProperty("user.dir");
@@ -106,7 +105,6 @@ public class TerceiroController implements IDao<Terceiro> {
 	
 	@Override
 	public Terceiro Modificar(Terceiro terceiro) {
-		int index = 0;
 		try {
             connection = MySqlDatabase.getConnection();
 			pstdados = (PreparedStatement) connection.prepareStatement(sqlalterar, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -118,22 +116,23 @@ public class TerceiroController implements IDao<Terceiro> {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-		for(Terceiro al : terceiros) {
-			if(al.getId() == terceiro.getId())
-				index = terceiros.indexOf(al);
-		}
-		return terceiros.set(index, terceiro);
+
+		return terceiro;
 	}
 	
 	@Override
 	public Terceiro Excluir(Terceiro terceiro) {
-		int index = 0;
-		
-		for(Terceiro al : terceiros) {
-			if(al.getId() == terceiro.getId())
-				index = terceiros.indexOf(al);
+		try {
+            connection = MySqlDatabase.getConnection();
+			pstdados = (PreparedStatement) connection.prepareStatement(sqlexcluir, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            connection.setAutoCommit(false);
+            pstdados.setInt(1, terceiro.getId());
+            pstdados.executeUpdate();
+			connection.commit();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
-		
-		return terceiros.remove(index);
+
+		return terceiro;
 	}
 }
