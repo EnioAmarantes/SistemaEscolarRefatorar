@@ -28,7 +28,7 @@ public class ProfessorController implements IDao<Professor> {
 	
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
-	private static final String sqlinserir = "INSERT INTO professor (id, nome, email, disciplina) VALUES (?, ?, ?, ?)";
+	private static final String sqlinserir = "INSERT INTO professor (id_professor, nome, email, disciplina) VALUES (?, ?, ?, ?)";
     private static final String sqlalterar = "UPDATE clientes SET nome = ?, nomepet = ?, email = ?, datecreated = ? WHERE id = ?";
     private static final String sqlaexcluir = "DELETE FROM clientes WHERE id = ?";
 	
@@ -56,12 +56,12 @@ public class ProfessorController implements IDao<Professor> {
 	public boolean Cria(Professor professor) {
         try {
             connection = MySqlDatabase.getConnection();
+			pstdados = (PreparedStatement) connection.prepareStatement(sqlinserir, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             connection.setAutoCommit(false);
             pstdados.setInt(1, professor.getId());
             pstdados.setString(2, professor.getNome());
             pstdados.setString(3, professor.getEmail());
             pstdados.setString(4, professor.getDisciplina());
-            pstdados = (PreparedStatement) connection.prepareStatement(sqlinserir, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             pstdados.executeUpdate();
         } catch (SQLException ex) {
