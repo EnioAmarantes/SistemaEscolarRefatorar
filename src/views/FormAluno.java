@@ -2,6 +2,8 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,7 +35,6 @@ public class FormAluno extends FormPessoaBase {
 	
 	private AlunoController alunoController = new AlunoController();
 
-	private static final String TITLE_ERROR = "Erro com os dados do Aluno";
 	private static final String TITLE_CONFIRM = null;
 	private static final String TITLE_REMOVE = null;
 	
@@ -62,8 +63,11 @@ public class FormAluno extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormAluno() {
+		this.controller = alunoController;
+		this.TITLE_ERROR = "Erro com os dados do Aluno";
 		String[] alunoColumns = {"Id", "Nome", "Email", "RA"};
 		this.setColumns(alunoColumns);
+		
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -150,10 +154,8 @@ public class FormAluno extends FormPessoaBase {
 		txtRa.setText(aluno.getRegistro_academico());
 	}
 	
-
 	@Override
 	public boolean is_valid() {
-		// TODO Auto-generated method stub
 		boolean isValid = true;
 		
 		isValid &= NameIsValid();
@@ -174,29 +176,45 @@ public class FormAluno extends FormPessoaBase {
 		return true;
 	}
 
-
 	private boolean EmailIsValid() {
 		
-		if(!Validator.ValidEmail(txtEmail.getText())) {
+		ArrayList<Aluno> alunos = controller.Lista();
+		String email = txtEmail.getText();
+		
+		if(!Validator.ValidEmail(email)) {
 			MessageError(EmailError);
 			txtEmail.requestFocus();
 			return false;
+		}
+		
+		for(Aluno aluno : alunos) {
+			if(aluno.getEmail().equals(email)) {
+				ERROR_MESSAGE = "O email " + email + " já está cadastrado";
+				return false;
+			}
 		}
 		return true;
 	}
 
 	private boolean RaIsValid() {
 		
-		if(!Validator.ValidNumber(txtRa.getText())) {
+		ArrayList<Aluno> alunos = alunoController.Lista();
+		String RA = txtRa.getText();
+		
+		if(!Validator.ValidNumber(RA)) {
 			MessageError(RaError);
 			txtRa.requestFocus();
 			return false;
 		}
+		
+		for(Aluno aluno : alunos) {
+			if(aluno.getRegistro_academico().equals(RA)) {
+				ERROR_MESSAGE = "O RA " + RA + " já está cadastrado";
+				return false;
+			}
+		}
+		
 		return true;
-	}
-	
-	public void MessageError(String message) {
-		JOptionPane.showMessageDialog(this, message, TITLE_ERROR, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override

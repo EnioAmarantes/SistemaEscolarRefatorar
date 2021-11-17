@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.TerceiroController;
+import models.Aluno;
+import models.Professor;
 import models.Terceiro;
 import shared.APessoa;
 import shared.EMode;
@@ -37,7 +40,6 @@ public class FormTerceiro extends FormPessoaBase {
 	
 	private TerceiroController terceiroController = new TerceiroController();
 
-	private static final String TITLE_ERROR = "Erro com os dados do Terceiro";
 	private static final String TITLE_CONFIRM = null;
 	private static final String TITLE_REMOVE = null;
 	
@@ -66,6 +68,8 @@ public class FormTerceiro extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormTerceiro() {
+		this.controller = terceiroController;
+		this.TITLE_ERROR = "Erro com os dados de Terceirizado";
 		String[] terceiroColumns = {"Id", "Nome", "Email", "Funcao"};
 		this.setColumns(terceiroColumns);
 		
@@ -181,11 +185,20 @@ public class FormTerceiro extends FormPessoaBase {
 
 
 	private boolean EmailIsValid() {
+		ArrayList<Terceiro> terceiros = controller.Lista();
+		String email = txtEmail.getText();
 		
 		if(!Validator.ValidEmail(txtEmail.getText())) {
 			MessageError(EmailError);
 			txtEmail.requestFocus();
 			return false;
+		}
+		
+		for(Terceiro terceiro : terceiros) {
+			if(terceiro.getEmail().equals(email)) {
+				ERROR_MESSAGE = "O email " + email + " já está cadastrado";
+				return false;
+			}
 		}
 		return true;
 	}

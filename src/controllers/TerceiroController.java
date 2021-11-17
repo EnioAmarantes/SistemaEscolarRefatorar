@@ -28,12 +28,7 @@ public class TerceiroController implements IDao<Terceiro> {
 	
 	@Override
 	public boolean Cria(Terceiro terceiro) {
-		boolean criaStatus = IsValid(terceiro);
-		
-		if(criaStatus)
-		criaStatus = terceiros.add(terceiro);
-		
-		return criaStatus;
+		return terceiros.add(terceiro);
 	}
 	
 	@Override
@@ -58,10 +53,5 @@ public class TerceiroController implements IDao<Terceiro> {
 		}
 		
 		return terceiros.remove(index);
-	}
-
-	@Override
-	public boolean IsValid(Terceiro terceiro) {
-		return !terceiros.contains(terceiro);
 	}
 }

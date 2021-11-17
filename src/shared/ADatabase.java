@@ -6,7 +6,6 @@ package shared;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Properties;
 
 /**
