@@ -28,7 +28,13 @@ public class AlunoController implements IDao<Aluno> {
 	
 	@Override
 	public boolean Cria(Aluno aluno) {
-		return alunos.add(aluno);
+		boolean status = false;
+		
+		if(!alunos.contains(aluno));{
+			status = alunos.add(aluno);			
+		}
+		
+		return status;
 	}
 	
 	@Override
