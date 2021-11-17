@@ -58,6 +58,7 @@ public class FormProfessor extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormProfessor() {
+		this.controller = professorController;
 		String[] professorColumns = {"Id", "Nome", "Email", "Disciplina"};
 		this.setColumns(professorColumns);
 		
@@ -112,7 +113,7 @@ public class FormProfessor extends FormPessoaBase {
 		
 		Professor professor = getAt(index);		
 		String msgRemoverProfessor = "Deseja Remover o professor " + professor.getNome() + "?";
-		String msgProfessorRemoved = "Aluno " + professor.getNome() + " removido com sucesso!";
+		String msgProfessorRemoved = "Professor " + professor.getNome() + " removido com sucesso!";
 		if(MessageConfirm.confirmDialog(this,  msgRemoverProfessor, TITLE_REMOVE, msgProfessorRemoved, TITLE_CONFIRM)) {
 			professorController.Excluir(professor);
 			RefreshTable();
