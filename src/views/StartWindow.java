@@ -9,6 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import shared.database.migrations.CreateProfessorTable;
+import shared.database.seeders.AlunoSeeder;
+import shared.database.seeders.ProfessorSeeder;
+import shared.database.seeders.TerceiroSeeder;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -70,6 +76,11 @@ public class StartWindow {
 		panel.add(btnAluno);
 		
 		JButton btnTurma = new JButton("Turma");
+		btnTurma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 		btnTurma.setBounds(283, 66, 92, 26);
 		panel.add(btnTurma);
 		
@@ -83,10 +94,26 @@ public class StartWindow {
 		panel.add(btnProfessor);
 		
 		JButton btnRelatorio = new JButton("Relat\u00F3rio");
+		btnRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				AlunoSeeder as = new AlunoSeeder();
+				as.run();
+				ProfessorSeeder ps = new ProfessorSeeder();
+				ps.run();
+				TerceiroSeeder ts = new TerceiroSeeder();
+				ts.run();
+			}
+		});
 		btnRelatorio.setBounds(283, 97, 92, 26);
 		panel.add(btnRelatorio);
 		
 		JButton btnTerceiro = new JButton("Terceiro");
+		btnTerceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FormTerceiro.main(null);
+			}
+		});
 		btnTerceiro.setBounds(55, 128, 87, 31);
 		panel.add(btnTerceiro);
 		
