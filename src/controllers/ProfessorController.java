@@ -29,7 +29,7 @@ public class ProfessorController implements IDao<Professor> {
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
 	private static final String sqlinserir = "INSERT INTO professor (id_professor, nome, email, disciplina) VALUES (?, ?, ?, ?)";
-    private static final String sqlalterar = "UPDATE professor SET nome = ?, nomepet = ?, email = ?, disciplina = ? WHERE id = ?";
+    private static final String sqlalterar = "UPDATE professor SET nome = ?, email = ?, disciplina = ? WHERE id = ?";
     private static final String sqlaexcluir = "DELETE FROM professor WHERE id = ?";
 	
 	public ProfessorController() {
