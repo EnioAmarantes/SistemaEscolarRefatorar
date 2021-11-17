@@ -66,6 +66,7 @@ public class FormTerceiro extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormTerceiro() {
+		this.controller = terceiroController;
 		String[] terceiroColumns = {"Id", "Nome", "Email", "Funcao"};
 		this.setColumns(terceiroColumns);
 		

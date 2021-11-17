@@ -62,6 +62,7 @@ public class FormAluno extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormAluno() {
+		this.controller = alunoController;
 		String[] alunoColumns = {"Id", "Nome", "Email", "RA"};
 		this.setColumns(alunoColumns);
 		
