@@ -104,6 +104,14 @@ public class ProfessorController implements IDao<Professor> {
 			ex.printStackTrace();
 			return false;
 		}
+
+		boolean criaStatus = IsValid(professor);
+		
+		if(criaStatus)
+		criaStatus = professores.add(professor);
+		
+		return criaStatus;
+
 	}
 
 	@Override
@@ -139,5 +147,10 @@ public class ProfessorController implements IDao<Professor> {
 		}
 
 		return professor;
+	}
+
+	@Override
+	public boolean IsValid(Professor professor) {
+		return !professores.contains(professor);
 	}
 }
