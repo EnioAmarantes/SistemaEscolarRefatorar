@@ -64,6 +64,7 @@ public class ProfessorController implements IDao<Professor> {
             pstdados.setString(4, professor.getDisciplina());
 
             pstdados.executeUpdate();
+			connection.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
