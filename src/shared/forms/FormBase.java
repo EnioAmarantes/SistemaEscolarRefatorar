@@ -8,13 +8,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lombok.Setter;
-import models.Aluno;
 import shared.AModel;
 import shared.EMode;
 import shared.IBase;
@@ -29,12 +29,15 @@ import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("hiding")
 public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	protected String TITLE_ERROR;
+	protected String ERROR_MESSAGE;
 	protected JPanel contentPane;
 	private String TITLE = "Title";
 	protected JTable tblContent;
@@ -202,6 +205,8 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 			controller.Cria(model);
 			RefreshTable();
 			Clear();	
+		}else {
+			MessageError(ERROR_MESSAGE);			
 		}
 	}
 	
@@ -228,7 +233,13 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 			controller.Modificar(model);
 			RefreshTable();
 			Clear();	
+		}else {
+			MessageError(this.ERROR_MESSAGE);			
 		}
+	}
+	
+	public void MessageError(String message) {
+		JOptionPane.showMessageDialog(this, message, TITLE_ERROR, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	protected abstract AModel fill();

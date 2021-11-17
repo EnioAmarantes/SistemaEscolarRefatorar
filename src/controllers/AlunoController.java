@@ -86,25 +86,20 @@ public class AlunoController implements IDao<Aluno> {
 
 	@Override
 	public boolean Cria(Aluno aluno) {
-		boolean criaStatus = IsValid(aluno);
-		if(criaStatus) {
-			try {
-				connection = MySqlDatabase.getConnection();
-				pstdados = (PreparedStatement) connection.prepareStatement(
-						sqlinserir, 
-						ResultSet.TYPE_SCROLL_SENSITIVE,
-						ResultSet.CONCUR_UPDATABLE);
-				connection.setAutoCommit(false);
-				this.prepStatSet(aluno);
-				pstdados.executeUpdate();
-				connection.commit();
-				criaStatus = alunos.add(aluno);
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-
-		}
-		return criaStatus;
+    try {
+      connection = MySqlDatabase.getConnection();
+      pstdados = (PreparedStatement) connection.prepareStatement(
+          sqlinserir, 
+          ResultSet.TYPE_SCROLL_SENSITIVE,
+          ResultSet.CONCUR_UPDATABLE);
+      connection.setAutoCommit(false);
+      this.prepStatSet(aluno);
+      pstdados.executeUpdate();
+      connection.commit();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+    return alunos.add(aluno);
 	}
 
 	@Override
@@ -142,8 +137,4 @@ public class AlunoController implements IDao<Aluno> {
 		return aluno;
 	}
 
-	@Override
-	public boolean IsValid(Aluno aluno) {
-		return !alunos.contains(aluno);
-	}
 }

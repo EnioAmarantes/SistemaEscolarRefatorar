@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
@@ -10,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.ProfessorController;
+import models.Aluno;
 import models.Professor;
 import shared.APessoa;
 import shared.EMode;
@@ -26,7 +28,6 @@ public class FormProfessor extends FormPessoaBase {
 	
 	private ProfessorController professorController = new ProfessorController();
 
-	private static final String TITLE_ERROR = "Erro com os dados do Professor";
 	private static final String TITLE_CONFIRM = null;
 	private static final String TITLE_REMOVE = null;
 	
@@ -59,6 +60,7 @@ public class FormProfessor extends FormPessoaBase {
 	 */
 	public FormProfessor() {
 		this.controller = professorController;
+		this.TITLE_ERROR = "Erro com os dados do Professor";
 		String[] professorColumns = {"Id", "Nome", "Email", "Disciplina"};
 		this.setColumns(professorColumns);
 		
@@ -187,11 +189,20 @@ public class FormProfessor extends FormPessoaBase {
 
 
 	private boolean EmailIsValid() {
+		ArrayList<Professor> professores = controller.Lista();
+		String email = txtEmail.getText();
 		
 		if(!Validator.ValidEmail(txtEmail.getText())) {
 			MessageConfirm.messageError(EmailError, TITLE_ERROR);
 			txtEmail.requestFocus();
 			return false;
+		}
+		
+		for(Professor professor : professores) {
+			if(professor.getEmail().equals(email)) {
+				ERROR_MESSAGE = "O email " + email + " j� est� cadastrado";
+				return false;
+			}
 		}
 		return true;
 	}
@@ -205,4 +216,5 @@ public class FormProfessor extends FormPessoaBase {
 		}
 		return true;
 	}
+
 }

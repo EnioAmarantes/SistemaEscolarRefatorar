@@ -3,8 +3,6 @@
  */
 package shared;
 
-import java.util.regex.Pattern;
-
 /**
  * @author enio
  *
