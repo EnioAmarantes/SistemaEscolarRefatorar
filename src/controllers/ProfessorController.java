@@ -29,8 +29,8 @@ public class ProfessorController implements IDao<Professor> {
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
 	private static final String sqlinserir = "INSERT INTO professor (id_professor, nome, email, disciplina) VALUES (?, ?, ?, ?)";
-    private static final String sqlalterar = "UPDATE clientes SET nome = ?, nomepet = ?, email = ?, datecreated = ? WHERE id = ?";
-    private static final String sqlaexcluir = "DELETE FROM clientes WHERE id = ?";
+    private static final String sqlalterar = "UPDATE professor SET nome = ?, nomepet = ?, email = ?, disciplina = ? WHERE id = ?";
+    private static final String sqlaexcluir = "DELETE FROM professor WHERE id = ?";
 	
 	public ProfessorController() {
 		String path = System.getProperty("user.dir");
