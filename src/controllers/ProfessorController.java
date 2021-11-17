@@ -28,7 +28,12 @@ public class ProfessorController implements IDao<Professor> {
 	
 	@Override
 	public boolean Cria(Professor professor) {
-		return professores.add(professor);
+		boolean criaStatus = IsValid(professor);
+		
+		if(criaStatus)
+		criaStatus = professores.add(professor);
+		
+		return criaStatus;
 	}
 	
 	@Override
@@ -53,5 +58,10 @@ public class ProfessorController implements IDao<Professor> {
 		}
 		
 		return professores.remove(index);
+	}
+
+	@Override
+	public boolean IsValid(Professor professor) {
+		return !professores.contains(professor);
 	}
 }

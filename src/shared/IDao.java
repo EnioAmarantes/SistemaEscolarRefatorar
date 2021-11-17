@@ -7,4 +7,5 @@ public interface IDao<T> {
 	public T Modificar(T model);
 	public boolean Cria(T model);
 	public ArrayList<T> Lista();
+	public boolean IsValid(T model);
 }

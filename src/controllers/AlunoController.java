@@ -28,7 +28,12 @@ public class AlunoController implements IDao<Aluno> {
 	
 	@Override
 	public boolean Cria(Aluno aluno) {
-		return alunos.add(aluno);
+		boolean criaStatus = IsValid(aluno);
+		
+		if(criaStatus)
+		criaStatus = alunos.add(aluno);
+		
+		return criaStatus;
 	}
 	
 	@Override
@@ -53,5 +58,10 @@ public class AlunoController implements IDao<Aluno> {
 		}
 		
 		return alunos.remove(index);
+	}
+
+	@Override
+	public boolean IsValid(Aluno aluno) {
+		return !alunos.contains(aluno);
 	}
 }
