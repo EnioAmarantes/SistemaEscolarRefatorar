@@ -42,7 +42,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 	protected EMode state;
 	@Setter
 	protected String[] columns;
-	protected IDao<AModel> controller;
+	protected IDao controller;
 
 	/**
 	 * Create the frame.

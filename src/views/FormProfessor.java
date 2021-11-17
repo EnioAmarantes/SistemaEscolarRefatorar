@@ -58,6 +58,7 @@ public class FormProfessor extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormProfessor() {
+		this.controller = professorController;
 		String[] professorColumns = {"Id", "Nome", "Email", "Disciplina"};
 		this.setColumns(professorColumns);
 		
