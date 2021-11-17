@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import models.Professor;
 import shared.ADatabase;
 import shared.IDao;
+import shared.consts.Config;
 import shared.database.MySqlDatabase;
 
 import java.io.File;
@@ -36,10 +37,8 @@ public class ProfessorController implements IDao<Professor> {
 	private static final String sqlexcluir = "DELETE FROM professor WHERE id_professor = ?";
 
 	public ProfessorController() {
-		String path = System.getProperty("user.dir");
-		File fileName = new File(path + "/src/shared/database/configBd.properties");
 		try {
-			ADatabase.init(fileName);
+			ADatabase.init(Config.PATHDB);
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
