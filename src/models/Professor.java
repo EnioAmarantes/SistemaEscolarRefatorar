@@ -14,4 +14,9 @@ public class Professor extends APessoa {
 		this.setEmail(email);
 		this.setDisciplina(disciplina);
 	}
+
+	public String getNomeDisciplina() {
+		// TODO Auto-generated method stub
+		return this.getNome() + " / " + this.getDisciplina();
+	}
 }
