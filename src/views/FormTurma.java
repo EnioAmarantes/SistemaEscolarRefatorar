@@ -175,7 +175,19 @@ public class FormTurma extends FormBase<Turma> {
 
 	@Override
 	public void FillTable(DefaultTableModel model) {
-		// TODO Auto-generated method stub
+		ArrayList<Turma> listaTurma = this.controller.Lista();
+		
+		for(Turma turma: listaTurma) {
+			model.addRow(new Object[] {
+					turma.getId(),
+					turma.getNome(),
+					turma.getCodigo(),
+					turma.getSala(),
+					turma.getAno().toString(),
+					turma.getProfessor().getNomeDisciplina(),
+					turma.getAlunos().size()
+			});
+		}
 		
 	}
 
