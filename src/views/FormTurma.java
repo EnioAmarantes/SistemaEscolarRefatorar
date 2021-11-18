@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controllers.ProfessorController;
 import controllers.TurmaController;
 import models.Professor;
 import models.Aluno;
@@ -23,6 +24,7 @@ import models.Turma;
 import shared.EMode;
 import shared.MessageConfirm;
 import shared.forms.FormBase;
+import javax.swing.DefaultComboBoxModel;
 
 public class FormTurma extends FormBase<Turma> {
 
@@ -143,7 +145,22 @@ public class FormTurma extends FormBase<Turma> {
 		getContentPane().add(btnMatricularAlunos);
 		
 		LoadTable();
+		LoadProfessores();
 	}
+	private void LoadProfessores() {
+		ProfessorController professorController = new ProfessorController();
+		
+		ArrayList<Professor> listaProfessor = professorController.Lista();
+		
+		ArrayList<String> campos = new ArrayList<String>();
+		
+		for(Professor professor: listaProfessor) {
+			campos.add(professor.getNomeDisciplina());
+		}
+		
+		jcbProfessor.setModel(new DefaultComboBoxModel(campos.toArray()));
+	}
+
 	@Override
 	public void BackHome() {
 		// TODO Auto-generated method stub
