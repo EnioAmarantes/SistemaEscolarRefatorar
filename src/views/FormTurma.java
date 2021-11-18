@@ -3,13 +3,25 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.TurmaController;
+import models.Professor;
+import models.Aluno;
 import models.Turma;
+import shared.EMode;
+import shared.MessageConfirm;
 import shared.forms.FormBase;
 
 public class FormTurma extends FormBase<Turma> {
@@ -27,6 +39,19 @@ public class FormTurma extends FormBase<Turma> {
 	private static final String NameError = "Verifique o Nome dessa Turma";
 	private static final String CodigoError = "Verifique código dessa Turma";
 	private static final String SalaEror = "Verifique a sala dessa Turma";
+	
+	protected JTextField txtTurma;
+	protected JTextField txtCodigo;
+	protected JTextField txtSala;
+	protected JTextField txtAno;
+	protected JComboBox<Professor> jcbProfessor;
+
+	private String Turma;
+	private String Codigo;
+	private String Sala;
+	private String Ano;
+	private Professor Professor;
+	private int Id = 0;
 
 	/**
 	 * Launch the application.
@@ -66,6 +91,57 @@ public class FormTurma extends FormBase<Turma> {
 		setThisTitle("Cadastro deTurmas");
 		getContentPane().setLayout(null);
 		
+		JLabel lblTurma = new JLabel("Turma");
+		lblTurma.setBounds(10, 79, 368, 14);
+		getContentPane().add(lblTurma);
+		
+		txtTurma = new JTextField();
+		txtTurma.setBounds(10, 96, 368, 20);
+		getContentPane().add(txtTurma);
+		txtTurma.setColumns(10);
+		
+		JLabel lblCodigo = new JLabel("Código");
+		lblCodigo.setBounds(10, 127, 368, 14);
+		getContentPane().add(lblCodigo);
+		
+		txtCodigo = new JTextField();
+		txtCodigo.setColumns(10);
+		txtCodigo.setBounds(10, 144, 368, 20);
+		getContentPane().add(txtCodigo);
+		
+		
+		JLabel lblSala = new JLabel("Sala");
+		lblSala.setBounds(10, 175, 368, 14);
+		getContentPane().add(lblSala);
+		
+		txtSala = new JTextField();
+		txtSala.setColumns(10);
+		txtSala.setBounds(10, 192, 368, 20);
+		getContentPane().add(txtSala);
+		
+		
+		JLabel lblAno = new JLabel("Ano");
+		lblAno.setBounds(10, 221, 368, 14);
+		getContentPane().add(lblAno);
+		
+		txtAno = new JTextField();
+		txtAno.setColumns(10);
+		txtAno.setBounds(10, 238, 368, 20);
+		getContentPane().add(txtAno);
+		
+		
+		JLabel lblProfessor = new JLabel("Professor");
+		lblProfessor.setBounds(10, 269, 368, 14);
+		getContentPane().add(lblProfessor);
+		
+		jcbProfessor = new JComboBox<Professor>();
+		jcbProfessor.setBounds(10, 286, 368, 20);
+		getContentPane().add(jcbProfessor);
+		
+		JButton btnMatricularAlunos = new JButton("Matricular Alunos");
+		btnMatricularAlunos.setBounds(105, 406, 184, 51);
+		getContentPane().add(btnMatricularAlunos);
+		
 		LoadTable();
 	}
 	@Override
@@ -76,7 +152,18 @@ public class FormTurma extends FormBase<Turma> {
 
 	@Override
 	public void Remove() {
-		// TODO Auto-generated method stub
+		int index = tblContent.getSelectedRow();
+		
+		if(index == -1)
+			return;
+		
+		Turma turma = getAt(index);		
+		String msgRemoverAluno = "Deseja Remover o Turma " + turma.getNome() + "?";
+		String msgAlunoRemoved = "Turma " + turma.getNome() + " removido com sucesso!";
+		if(MessageConfirm.confirmDialog(this,  msgRemoverAluno, TITLE_REMOVE, msgAlunoRemoved, TITLE_CONFIRM)) {
+			controller.Excluir(turma);
+			RefreshTable();
+		}
 		
 	}
 
@@ -94,25 +181,49 @@ public class FormTurma extends FormBase<Turma> {
 
 	@Override
 	protected Turma fill() {
-		// TODO Auto-generated method stub
-		return null;
+	
+		Turma = txtTurma.getText();
+		Codigo = txtCodigo.getText();
+		Sala = txtSala.getText();
+		Ano = txtAno.getText();
+		Professor = (models.Professor) jcbProfessor.getSelectedItem();
+		
+		return new Turma(Id , Turma, Codigo, Sala, Ano, Professor, new ArrayList<Aluno>());
 	}
 
 	@Override
 	protected void fill(Turma model) {
-		// TODO Auto-generated method stub
+		Turma turma = (Turma) model;
+		
+		Turma = txtTurma.getText();
+		Codigo = txtCodigo.getText();
+		Sala = txtSala.getText();
+		Ano = txtAno.getText();
+		Professor = (Professor) jcbProfessor.getSelectedItem();
 		
 	}
 
 	@Override
 	protected Turma getAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
+		String Turma = (String) tblContent.getValueAt(index, tblContent.getColumn("Turma").getModelIndex());
+		String Codigo = (String) tblContent.getValueAt(index, tblContent.getColumn("Código").getModelIndex());
+		String Sala = (String) tblContent.getValueAt(index, tblContent.getColumn("Sala").getModelIndex());
+		String Ano = (String) tblContent.getValueAt(index, tblContent.getColumn("Ano").getModelIndex());
+		Professor Professor = (Professor) tblContent.getValueAt(index, tblContent.getColumn("Professor/Disciplina").getModelIndex());
+		
+		return new Turma(id, Turma, Codigo, Sala, Ano, Professor, new ArrayList<Aluno>());
 	}
 
 	@Override
 	public void Clear() {
-		// TODO Auto-generated method stub
+		state = EMode.New;
+		
+		txtTurma.setText("");
+		txtCodigo.setText("");
+		txtSala.setText("");
+		txtAno.setText("");
+		jcbProfessor.setSelectedIndex(0);
 		
 	}
 	

@@ -54,9 +54,13 @@ public class TurmaController implements IDao<Turma> {
 		try {
 			this.ConsultarTodos();
 			while (rsdados.next()) {
-				Turma turma = new Turma(Integer.parseInt(rsdados.getObject(1).toString()),
-						rsdados.getObject(2).toString(), rsdados.getObject(3).toString(),
-						rsdados.getObject(4).toString(), (Date) rsdados.getObject(4), (Professor) rsdados.getObject(5),
+				Turma turma = new Turma(
+						Integer.parseInt(rsdados.getObject(1).toString()),
+						rsdados.getObject(2).toString(), 
+						rsdados.getObject(3).toString(),
+						rsdados.getObject(4).toString(), 
+						rsdados.getObject(4).toString(), 
+						(Professor) rsdados.getObject(5),
 						(ArrayList<Aluno>) rsdados.getObject(6));
 
 				turmas.add(turma);
