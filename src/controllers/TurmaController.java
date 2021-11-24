@@ -31,10 +31,10 @@ public class TurmaController implements IDao<Turma> {
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
 
-	private static final String sqlconsulta = "SELECT * FROM aluno order by id_aluno";
-	private static final String sqlinserir = "INSERT INTO aluno (nome, email, registro_academico) VALUES ( ?, ?, ?)";
-	private static final String sqlalterar = "UPDATE aluno SET nome = ?, email = ?, registro_academico = ? WHERE id_aluno = ?";
-	private static final String sqlexcluir = "DELETE FROM aluno WHERE id_aluno = ?";
+	private static final String sqlconsulta = "SELECT * FROM turma order by id_turma";
+	private static final String sqlinserir = "INSERT INTO turma (nome, codigo, sala, id_professor) VALUES ( ?, ?, ?, ?)";
+	private static final String sqlalterar = "UPDATE turma SET nome = ?, codigo = ?, sala = ?, id_professor = ? WHERE id_turma = ?";
+	private static final String sqlexcluir = "DELETE FROM turma WHERE id_turma = ?";
 
 	public TurmaController() {
 		String path = System.getProperty("user.dir");
