@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import lombok.Getter;
 import models.Matricula;
 import models.Turma;
 import shared.database.MySqlDatabase;
@@ -14,6 +15,7 @@ import models.Aluno;
 public class MatriculaController {
 
 	private Turma turma;
+	@Getter
 	private Matricula matricula;
 	private AlunoController alunoController;
 	
@@ -25,14 +27,15 @@ public class MatriculaController {
 	private static final String sqlDesmatricularAluno = "INSERT INTO matricula_turma_aluno (id_aluno, id_turma) VALUES ( ?, ? )";
 	private static final String sqlMatricularAluno = "DELETE FROM matricula_turma_aluno where id_aluno = ? and id_turma = ?";
 	
-	public MatriculaController(Turma turma) {
-		this.turma = turma;
+	public MatriculaController(int id_turma) {
+		this.turma = new TurmaController().getTurmaById(id_turma);
 		this.matricula = new Matricula();
 		this.alunoController = new AlunoController();
 		
 		LoadAlunos();
 		
 	}
+	
 	
 	private void LoadAlunos() {
 		this.matricula.setAlunosMatriculados(getAlunosMatriculados());

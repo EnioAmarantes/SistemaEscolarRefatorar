@@ -25,6 +25,8 @@ import shared.EMode;
 import shared.MessageConfirm;
 import shared.forms.FormBase;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FormTurma extends FormBase<Turma> {
 
@@ -141,6 +143,17 @@ public class FormTurma extends FormBase<Turma> {
 		getContentPane().add(jcbProfessor);
 		
 		JButton btnMatricularAlunos = new JButton("Matricular Alunos");
+		btnMatricularAlunos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = tblContent.getSelectedRow();
+				
+				if(index == -1)
+					return;
+				
+				String[] id_turma = {String.valueOf((int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex()))};
+				FormMatricula.main(id_turma);
+			}
+		});
 		btnMatricularAlunos.setBounds(105, 406, 184, 51);
 		getContentPane().add(btnMatricularAlunos);
 		

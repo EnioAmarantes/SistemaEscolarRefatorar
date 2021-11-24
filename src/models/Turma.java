@@ -20,7 +20,7 @@ public class Turma extends AModel{
 	@Getter @Setter
 	private Date ano;
 	@Getter @Setter
-	private Professor professor;
+	private Professor professor = new Professor();
 	@Getter
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	
@@ -32,6 +32,10 @@ public class Turma extends AModel{
 		fillAno(ano);
 		this.setProfessor(professor);
 		this.alunos.addAll(alunos);
+	}
+
+	public Turma() {
+		// TODO Auto-generated constructor stub
 	}
 
 	private void fillAno(String ano) {
