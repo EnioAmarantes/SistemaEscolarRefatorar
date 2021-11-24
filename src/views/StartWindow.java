@@ -21,6 +21,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class StartWindow {
 
@@ -65,64 +69,76 @@ public class StartWindow {
 		frmSistemaDeGerenciamento.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JButton btnAluno = new JButton("Aluno");
-		btnAluno.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		JMenuBar menuBar = new JMenuBar();
+		frmSistemaDeGerenciamento.setJMenuBar(menuBar);
+		
+		JMenu mnuGerenciamento = new JMenu("Gerenciamento");
+		mnuGerenciamento.setMnemonic('g');
+		menuBar.add(mnuGerenciamento);
+		
+		JMenuItem mnuAlunos = new JMenuItem("Alunos");
+		mnuAlunos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				FormAluno.main(null);
 			}
 		});
-		btnAluno.setBounds(55, 66, 87, 26);
-		panel.add(btnAluno);
+		mnuGerenciamento.add(mnuAlunos);
 		
-		JButton btnTurma = new JButton("Turma");
-		btnTurma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		btnTurma.setBounds(283, 66, 92, 26);
-		panel.add(btnTurma);
-		
-		JButton btnProfessor = new JButton("Professor");
-		btnProfessor.addActionListener(new ActionListener() {
+		JMenuItem mnuProfessores = new JMenuItem("Professores");
+		mnuProfessores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FormProfessor.main(null);
 			}
 		});
-		btnProfessor.setBounds(55, 97, 87, 26);
-		panel.add(btnProfessor);
+		mnuGerenciamento.add(mnuProfessores);
 		
-		JButton btnRelatorio = new JButton("Relat\u00F3rio");
-		btnRelatorio.addActionListener(new ActionListener() {
+		JMenuItem mnuTerceiros = new JMenuItem("Terceiros");
+		mnuTerceiros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				AlunoSeeder as = new AlunoSeeder();
-				as.run();
-				ProfessorSeeder ps = new ProfessorSeeder();
-				ps.run();
-				TerceiroSeeder ts = new TerceiroSeeder();
-				ts.run();
-			}
-		});
-		btnRelatorio.setBounds(283, 97, 92, 26);
-		panel.add(btnRelatorio);
-		
-		JButton btnTerceiro = new JButton("Terceiro");
-		btnTerceiro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
 				FormTerceiro.main(null);
 			}
 		});
-		btnTerceiro.setBounds(55, 128, 87, 31);
-		panel.add(btnTerceiro);
+		mnuGerenciamento.add(mnuTerceiros);
 		
-		JLabel lblTitle = new JLabel(TITLE);
-		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblTitle.setBounds(55, 21, 320, 14);
-		panel.add(lblTitle);
+		JMenuItem mnuTurmas = new JMenuItem("Turmas");
+		mnuTurmas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormTurma.main(null);
+			}
+		});
+		mnuGerenciamento.add(mnuTurmas);
+		
+		JMenu mnuAdministrativo = new JMenu("Administrativo");
+		mnuAdministrativo.setMnemonic('a');
+		menuBar.add(mnuAdministrativo);
+		
+		JMenuItem mnuDisciplinas = new JMenuItem("Disciplinas");
+		mnuDisciplinas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormDisciplina.main(null);
+			}
+		});
+		mnuAdministrativo.add(mnuDisciplinas);
+		
+		JMenuItem mnuFuncoes = new JMenuItem("Fun\u00E7\u00F5es");
+		mnuFuncoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormFuncoes.main(null);
+			}
+		});
+		mnuAdministrativo.add(mnuFuncoes);
+		
+		JMenu mnuRelatorios = new JMenu("Relat\u00F3rios");
+		mnuRelatorios.setMnemonic('r');
+		menuBar.add(mnuRelatorios);
+		
+		JMenuItem mnuRelatorioAlunos = new JMenuItem("Relat\u00F3rio de Alunos");
+		mnuRelatorios.add(mnuRelatorioAlunos);
+		
+		JMenuItem mnuRelatorioTurmas = new JMenuItem("Relat\u00F3rio de Turmas");
+		mnuRelatorios.add(mnuRelatorioTurmas);
+		
+		JMenuItem mnuRelatorioDisciplinas = new JMenuItem("Relat\u00F3rio de Disciplinas");
+		mnuRelatorios.add(mnuRelatorioDisciplinas);
 	}
 }

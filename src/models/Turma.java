@@ -31,9 +31,7 @@ public class Turma extends AModel{
 		this.setSala(sala);
 		fillAno(ano);
 		this.setProfessor(professor);
-		for(Aluno aluno : alunos) {
-			this.alunos.add(aluno);
-		}
+		this.alunos.addAll(alunos);
 	}
 
 	private void fillAno(String ano) {

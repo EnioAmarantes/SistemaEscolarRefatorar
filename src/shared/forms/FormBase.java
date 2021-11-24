@@ -67,20 +67,6 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnBack = new JButton("Voltar");
-		btnBack.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnBack.setIcon(new ImageIcon(FormBase.class.getResource("/shared/icons/setap.png")));
-		btnBack.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				BackHome();
-			}
-		});
-		btnBack.setOpaque(false);
-		btnBack.setBounds(9, 11, 114, 37);
-		contentPane.add(btnBack);
-		
 		JLabel lblTitle = new JLabel();
 		lblTitle.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -90,7 +76,7 @@ public abstract class FormBase<AModel> extends JFrame implements IBase, ITable {
 		lblTitle.setLabelFor(contentPane);
 		lblTitle.setName("lblTitle");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblTitle.setBounds(9, 46, 330, 37);
+		lblTitle.setBounds(10, 10, 369, 37);
 		contentPane.add(lblTitle);
 		
 		btnNew = new JButton("Salvar");
