@@ -136,4 +136,9 @@ public class AlunoController implements IDao<Aluno> {
 		return aluno;
 	}
 
+	public ArrayList<Aluno> getByTurmaId(int id_turma) {
+		// TODO Auto-generated method stub
+		return new ArrayList<Aluno>();
+	}
+
 }

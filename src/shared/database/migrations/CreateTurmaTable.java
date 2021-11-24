@@ -5,7 +5,7 @@ public class CreateTurmaTable extends AMigrate{
 	public CreateTurmaTable() {
 		this.table = "turma";
 		this.sqlCreat = "CREATE TABLE IF NOT EXISTS `turma` ( "
-				+ "	`id_turma` INT NOT NULL, "
+				+ "	`id_turma` INT NOT NULL AUTO_INCREMENT, "
 				+ "	`codigo` VARCHAR(45) NOT NULL, "
 				+ "	`nome` VARCHAR(45) NULL, "
 				+ "	`sala` VARCHAR(45) NULL, "
@@ -21,7 +21,7 @@ public class CreateTurmaTable extends AMigrate{
 				+ "ON UPDATE NO ACTION);"
 				+ ""
 				+ "CREATE TABLE IF NOT EXISTS `matricula_turma_aluno` ("
-				+ "	`id_matricula` int not null, "
+				+ "	`id_matricula` int not null AUTO_INCREMENT, "
 				+ "	`id_turma` int not null, "
 				+ "	`id_aluno` int not null, "
 				+ "PRIMARY KEY (`id_matricula`), "

@@ -28,11 +28,18 @@ public class TurmaController implements IDao<Turma> {
 	ArrayList<Turma> turmas = new ArrayList<Turma>();
 
 	private ResultSet rsdados = null;
-	private Connection connection = null;
+	private ResultSet rsdadosAlunos = null;
+	private ResultSet rsdadosProfessor = null;
+	private PreparedStatement pstdadosAlunos = null;
+	private PreparedStatement pstdadosProfessor = null;
 	private PreparedStatement pstdados = null;
+	private Connection connection = null;
 
 	private static final String sqlconsulta = "SELECT id_turma, nome, codigo, sala, ano, id_professor FROM turma order by id_turma";
+	private static final String sqlGetProfessorByTurmaId = "SELECT id_professor, nome, email, disciplina FROM professor where id_professor = ?";
+	private static final String sqlGetAlunosByTurmaId = "SELECT a.id_aluno, a.nome, a.email, a.registro_academico FROM matricula_turma_aluno mta inner join aluno a on a.id_aluno = mta.id_aluno where mta.id_turma = ?";
 	private static final String sqlinserir = "INSERT INTO turma (nome, codigo, sala, id_professor) VALUES ( ?, ?, ?, ?)";
+	private static final String sqlMatriculaAluno = "INSERT INTO matricula_turma_aluno (id_aluno, id_turma) values ( ?, ? )";
 	private static final String sqlalterar = "UPDATE turma SET nome = ?, codigo = ?, sala = ?, id_professor = ? WHERE id_turma = ?";
 	private static final String sqlexcluir = "DELETE FROM turma WHERE id_turma = ?; DELETE FROM matricula WHERE id_turma = ?";
 
@@ -52,6 +59,7 @@ public class TurmaController implements IDao<Turma> {
 	public ArrayList<Turma> Lista() {
 		ArrayList<Turma> turmas = new ArrayList<Turma>();
 		ProfessorController professorController = new ProfessorController();
+		AlunoController alunoController = new AlunoController();
 		try {
 			this.ConsultarTodos();
 			while (rsdados.next()) {
@@ -61,8 +69,8 @@ public class TurmaController implements IDao<Turma> {
 						rsdados.getObject(3).toString(),
 						rsdados.getObject(4).toString(), 
 						rsdados.getObject(5).toString(), 
-						professorController.getById(Integer.parseInt(rsdados.getObject(6).toString())),
-						new ArrayList<Aluno>());
+						getProfessorByTurmaId(Integer.parseInt(rsdados.getObject(6).toString())),
+						getAlunosByTurmaId(Integer.parseInt(rsdados.getObject(1).toString())));
 
 				turmas.add(turma);
 			}
@@ -146,6 +154,77 @@ public class TurmaController implements IDao<Turma> {
 		}
 
 		return turma;
+	}
+	
+	public Professor getProfessorByTurmaId(int id) {
+		Professor professor = new Professor();
+			try {
+				connection = MySqlDatabase.getConnection();
+				pstdadosProfessor = (PreparedStatement) connection.prepareStatement(sqlGetProfessorByTurmaId, ResultSet.TYPE_SCROLL_SENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);
+				pstdadosProfessor.setInt(1, id);
+				rsdadosProfessor = pstdadosProfessor.executeQuery();
+				while(rsdadosProfessor.next()) {
+					professor = new Professor(
+						Integer.parseInt(rsdadosProfessor.getObject(1).toString()),
+						rsdadosProfessor.getObject(2).toString(), 
+						rsdadosProfessor.getObject(3).toString(),
+						rsdadosProfessor.getObject(4).toString());
+				}
+				
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+
+			return professor;
+	}
+	
+	public ArrayList<Aluno> getAlunosByTurmaId(int id){
+		ArrayList<Aluno> alunos = new ArrayList<Aluno>();
+		
+		try {
+			connection = MySqlDatabase.getConnection();
+			pstdadosAlunos = (PreparedStatement) connection.prepareStatement(sqlGetAlunosByTurmaId, ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			pstdadosAlunos.setInt(1, id);
+			rsdadosAlunos = pstdadosAlunos.executeQuery();
+			while(rsdadosAlunos.next()) {
+				alunos.add(new Aluno(
+					Integer.parseInt(rsdadosAlunos.getObject(1).toString()),
+					rsdadosAlunos.getObject(2).toString(), 
+					rsdadosAlunos.getObject(3).toString(),
+					rsdadosAlunos.getObject(4).toString()
+					)
+				);
+			}
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+
+		return alunos;
+	}
+	
+	public boolean matriculaAlunos(ArrayList<Aluno> alunos, int id_turma) {
+		
+		try {
+			connection = MySqlDatabase.getConnection();
+			connection.setAutoCommit(false);
+			pstdadosAlunos = (PreparedStatement) connection.prepareStatement(sqlMatriculaAluno, ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			
+			for(Aluno aluno : alunos) {
+				pstdadosAlunos.setInt(1, aluno.getId());
+				pstdadosAlunos.setInt(2, id_turma);
+				pstdados.executeUpdate();
+			}
+			
+			connection.commit();
+			return true;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 }

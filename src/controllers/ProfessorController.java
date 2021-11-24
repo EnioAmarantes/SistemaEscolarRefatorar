@@ -32,7 +32,6 @@ public class ProfessorController implements IDao<Professor> {
 	private PreparedStatement pstdados = null;
 
 	private static final String sqlconsulta = "SELECT * FROM professor order by id_professor";
-	private static final String sqlGetById = "SELECT id_professor, nome, email, disciplina FROM professor where id_professor = ?";
 	private static final String sqlinserir = "INSERT INTO professor (nome, email, disciplina) VALUES ( ?, ?, ?)";
 	private static final String sqlalterar = "UPDATE professor SET nome = ?, email = ?, disciplina = ? WHERE id_professor = ?";
 	private static final String sqlexcluir = "DELETE FROM professor WHERE id_professor = ?";
@@ -142,26 +141,5 @@ public class ProfessorController implements IDao<Professor> {
 		return professor;
 	}
 	
-	public Professor getById(int id) {
-		Professor professor = new Professor();
-			try {
-				connection = MySqlDatabase.getConnection();
-				pstdados = (PreparedStatement) connection.prepareStatement(sqlGetById, ResultSet.TYPE_SCROLL_SENSITIVE,
-						ResultSet.CONCUR_UPDATABLE);
-				pstdados.setInt(1, id);
-				rsdados = pstdados.executeQuery();
-				while(rsdados.next()) {
-					professor = new Professor(
-						Integer.parseInt(rsdados.getObject(1).toString()),
-						rsdados.getObject(2).toString(), 
-						rsdados.getObject(3).toString(),
-						rsdados.getObject(4).toString());
-				}
-				
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
 
-			return professor;
-	}
 }
