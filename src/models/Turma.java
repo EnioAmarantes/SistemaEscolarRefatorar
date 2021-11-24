@@ -22,7 +22,7 @@ public class Turma extends AModel{
 	@Getter @Setter
 	private Professor professor;
 	@Getter
-	private ArrayList<Aluno> alunos;
+	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	
 	public Turma(int id, String nome, String codigo, String sala, String ano, Professor professor, ArrayList<Aluno> alunos){		
 		this.id = id;

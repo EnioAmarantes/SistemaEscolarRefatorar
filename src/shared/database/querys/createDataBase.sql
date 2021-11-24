@@ -1,2 +1,2 @@
 DROP DATABASE IF EXISTS sistemaEscolar;
-CREATE DATABASE sistemaEscolar;
+CREATE DATABASE IF NOT EXISTS sistemaEscolar;

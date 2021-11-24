@@ -20,5 +20,14 @@
 	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.27.jar"/>
+	<classpathentry kind="lib" path="C:/Users/enio/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/9.0.55/tomcat-embed-core-9.0.55.jar" sourcepath="C:/Users/enio/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/9.0.55/tomcat-embed-core-9.0.55-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.apache.tomcat.embed"/>
+			<attribute name="maven.artifactId" value="tomcat-embed-core"/>
+			<attribute name="maven.version" value="9.0.55"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

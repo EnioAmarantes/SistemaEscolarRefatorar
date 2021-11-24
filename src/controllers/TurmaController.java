@@ -31,10 +31,10 @@ public class TurmaController implements IDao<Turma> {
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
 
-	private static final String sqlconsulta = "SELECT * FROM turma order by id_turma";
+	private static final String sqlconsulta = "SELECT id_turma, nome, codigo, sala, ano, id_professor FROM turma order by id_turma";
 	private static final String sqlinserir = "INSERT INTO turma (nome, codigo, sala, id_professor) VALUES ( ?, ?, ?, ?)";
 	private static final String sqlalterar = "UPDATE turma SET nome = ?, codigo = ?, sala = ?, id_professor = ? WHERE id_turma = ?";
-	private static final String sqlexcluir = "DELETE FROM turma WHERE id_turma = ?";
+	private static final String sqlexcluir = "DELETE FROM turma WHERE id_turma = ?; DELETE FROM matricula WHERE id_turma = ?";
 
 	public TurmaController() {
 		String path = System.getProperty("user.dir");
@@ -50,7 +50,8 @@ public class TurmaController implements IDao<Turma> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Turma> Lista() {
-		ArrayList<Turma> alunos = new ArrayList<Turma>();
+		ArrayList<Turma> turmas = new ArrayList<Turma>();
+		ProfessorController professorController = new ProfessorController();
 		try {
 			this.ConsultarTodos();
 			while (rsdados.next()) {
@@ -59,9 +60,9 @@ public class TurmaController implements IDao<Turma> {
 						rsdados.getObject(2).toString(), 
 						rsdados.getObject(3).toString(),
 						rsdados.getObject(4).toString(), 
-						rsdados.getObject(4).toString(), 
-						(Professor) rsdados.getObject(5),
-						(ArrayList<Aluno>) rsdados.getObject(6));
+						rsdados.getObject(5).toString(), 
+						professorController.getById(Integer.parseInt(rsdados.getObject(6).toString())),
+						new ArrayList<Aluno>());
 
 				turmas.add(turma);
 			}
@@ -70,7 +71,7 @@ public class TurmaController implements IDao<Turma> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return alunos;
+		return turmas;
 	}
 
 	public boolean ConsultarTodos() {
@@ -137,6 +138,7 @@ public class TurmaController implements IDao<Turma> {
 					ResultSet.CONCUR_UPDATABLE);
 			connection.setAutoCommit(false);
 			pstdados.setInt(1, turma.getId());
+			pstdados.setInt(2, turma.getId());
 			pstdados.executeUpdate();
 			connection.commit();
 		} catch (SQLException ex) {

@@ -15,6 +15,10 @@ public class Professor extends APessoa {
 		this.setDisciplina(disciplina);
 	}
 
+	public Professor() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getNomeDisciplina() {
 		// TODO Auto-generated method stub
 		return this.getNome() + " / " + this.getDisciplina();

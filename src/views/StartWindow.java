@@ -4,11 +4,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import shared.database.migrations.CreateAlunoTable;
 import shared.database.migrations.CreateProfessorTable;
@@ -18,13 +15,8 @@ import shared.database.seeders.AlunoSeeder;
 import shared.database.seeders.ProfessorSeeder;
 import shared.database.seeders.TerceiroSeeder;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
