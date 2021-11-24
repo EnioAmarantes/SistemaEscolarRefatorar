@@ -10,7 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import shared.database.migrations.CreateAlunoTable;
 import shared.database.migrations.CreateProfessorTable;
+import shared.database.migrations.CreateTerceiroTable;
+import shared.database.migrations.CreateTurmaTable;
 import shared.database.seeders.AlunoSeeder;
 import shared.database.seeders.ProfessorSeeder;
 import shared.database.seeders.TerceiroSeeder;
@@ -51,6 +54,16 @@ public class StartWindow {
 	 * Create the application.
 	 */
 	public StartWindow() {
+		CreateAlunoTable ca = new CreateAlunoTable();
+		ca.up(new AlunoSeeder());
+		CreateProfessorTable cp = new CreateProfessorTable();
+		cp.up(new ProfessorSeeder());
+		CreateTerceiroTable ct = new CreateTerceiroTable();
+		ct.up(new TerceiroSeeder());
+		
+		CreateTurmaTable cTurma = new CreateTurmaTable();
+		cTurma.up();
+		
 		initialize();
 	}
 
