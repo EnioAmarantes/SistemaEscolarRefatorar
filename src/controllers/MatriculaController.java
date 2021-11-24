@@ -24,8 +24,8 @@ public class MatriculaController {
 	private PreparedStatement pstdados = null;
 	
 	private static final String sqlGetAlunosMatriculados = "SELECT a.id_aluno, a.nome, a.email, a.registro_academico FROM aluno a inner join matricula_turma_aluno mta on mta.id_aluno = a.id_aluno WHERE mta.id_turma = ? ORDER BY a.nome ASC";
-	private static final String sqlDesmatricularAluno = "INSERT INTO matricula_turma_aluno (id_aluno, id_turma) VALUES ( ?, ? )";
-	private static final String sqlMatricularAluno = "DELETE FROM matricula_turma_aluno where id_aluno = ? and id_turma = ?";
+	private static final String sqlMatricularAluno = "INSERT INTO matricula_turma_aluno (id_aluno, id_turma) VALUES ( ?, ? )";
+	private static final String sqlDesmatricularAluno  = "DELETE FROM matricula_turma_aluno where id_aluno = ? and id_turma = ?";
 	
 	public MatriculaController(int id_turma) {
 		this.turma = new TurmaController().getTurmaById(id_turma);
@@ -80,6 +80,10 @@ public class MatriculaController {
 
 	
 	public boolean MatricularAlunos(ArrayList<Aluno> alunos) {
+		
+		if(alunos == null || alunos.size() == 0)
+			return false;
+		
 	    try {
 	        connection = MySqlDatabase.getConnection();
 	        pstdados = (PreparedStatement) connection.prepareStatement(
@@ -102,6 +106,10 @@ public class MatriculaController {
 	}
 	
 	public boolean DesmatricularAlunos(ArrayList<Aluno> alunos) {
+		
+		if(alunos == null || alunos.size() == 0)
+			return false;
+		
 	    try {
 	        connection = MySqlDatabase.getConnection();
 	        pstdados = (PreparedStatement) connection.prepareStatement(

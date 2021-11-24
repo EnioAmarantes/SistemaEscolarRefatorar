@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import shared.database.migrations.CreateAlunoTable;
+import shared.database.migrations.CreateMatriculaTable;
 import shared.database.migrations.CreateProfessorTable;
 import shared.database.migrations.CreateTerceiroTable;
 import shared.database.migrations.CreateTurmaTable;
@@ -52,9 +53,10 @@ public class StartWindow {
 		cp.up(new ProfessorSeeder());
 		CreateTerceiroTable ct = new CreateTerceiroTable();
 		ct.up(new TerceiroSeeder());
-		
 		CreateTurmaTable cTurma = new CreateTurmaTable();
 		cTurma.up();
+		CreateMatriculaTable cMatricula = new CreateMatriculaTable();
+		cMatricula.up();
 		
 		initialize();
 	}
@@ -64,7 +66,7 @@ public class StartWindow {
 	 */
 	private void initialize() {
 		frmSistemaDeGerenciamento = new JFrame();
-		frmSistemaDeGerenciamento.setMinimumSize(new Dimension(400, 300));
+		frmSistemaDeGerenciamento.setMinimumSize(new Dimension(600, 450));
 		frmSistemaDeGerenciamento.setIconImage(Toolkit.getDefaultToolkit().getImage(StartWindow.class.getResource("/shared/icons/estudando.png")));
 		frmSistemaDeGerenciamento.setTitle(TITLE);
 		frmSistemaDeGerenciamento.setBounds(100, 100, 450, 300);

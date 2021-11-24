@@ -18,18 +18,6 @@ public class CreateTurmaTable extends AMigrate{
 				+ "	FOREIGN KEY (`id_professor`) "
 				+ "	REFERENCES `professor` (`id_professor`) "
 				+ "ON DELETE NO ACTION "
-				+ "ON UPDATE NO ACTION);"
-				+ ""
-				+ "CREATE TABLE IF NOT EXISTS `matricula_turma_aluno` ("
-				+ "	`id_matricula` int not null AUTO_INCREMENT, "
-				+ "	`id_turma` int not null, "
-				+ "	`id_aluno` int not null, "
-				+ "PRIMARY KEY (`id_matricula`), "
-				+ "CONSTRAINT `fk_matricula_turma` "
-				+ "	FOREIGN KEY (`id_turma`) "
-				+ "	REFERENCES `turma` (`id_turma`), "
-				+ "CONSTRAINT `fk_matricula_aluno` "
-				+ "	FOREIGN KEY (`id_aluno`) "
-				+ "	REFERENCES `aluno` (`id_aluno`));";
+				+ "ON UPDATE NO ACTION);";
 	}
 }

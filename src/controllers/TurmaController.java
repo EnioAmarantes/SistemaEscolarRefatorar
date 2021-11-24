@@ -35,8 +35,8 @@ public class TurmaController implements IDao<Turma> {
 	private PreparedStatement pstdados = null;
 	private Connection connection = null;
 
-	private static final String sqlconsulta = "SELECT id_turma, nome, codigo, sala, ano, id_professor FROM turma order by id_turma";
-	private static final String sqlconsultaById = "SELECT id_turma, nome, codigo, sala, ano, id_professor FROM turma WHERE id_turma = ?";
+	private static final String sqlconsulta = "SELECT id_turma, nome, codigo, sala, id_professor FROM turma order by id_turma";
+	private static final String sqlconsultaById = "SELECT id_turma, nome, codigo, sala, id_professor FROM turma WHERE id_turma = ?";
 	private static final String sqlGetProfessorByTurmaId = "SELECT id_professor, nome, email, disciplina FROM professor where id_professor = ?";
 	private static final String sqlGetAlunosByTurmaId = "SELECT a.id_aluno, a.nome, a.email, a.registro_academico FROM matricula_turma_aluno mta inner join aluno a on a.id_aluno = mta.id_aluno where mta.id_turma = ?";
 	private static final String sqlinserir = "INSERT INTO turma (nome, codigo, sala, id_professor) VALUES ( ?, ?, ?, ?)";
@@ -67,8 +67,7 @@ public class TurmaController implements IDao<Turma> {
 						rsdados.getObject(2).toString(), 
 						rsdados.getObject(3).toString(),
 						rsdados.getObject(4).toString(), 
-						rsdados.getObject(5).toString(), 
-						getProfessorByTurmaId(Integer.parseInt(rsdados.getObject(6).toString())),
+						getProfessorByTurmaId(Integer.parseInt(rsdados.getObject(5).toString())),
 						getAlunosByTurmaId(Integer.parseInt(rsdados.getObject(1).toString())));
 
 				turmas.add(turma);
@@ -109,8 +108,7 @@ public class TurmaController implements IDao<Turma> {
 						rsdados.getObject(2).toString(), 
 						rsdados.getObject(3).toString(),
 						rsdados.getObject(4).toString(), 
-						rsdados.getObject(5).toString(), 
-						getProfessorByTurmaId(Integer.parseInt(rsdados.getObject(6).toString())),
+						getProfessorByTurmaId(Integer.parseInt(rsdados.getObject(5).toString())),
 						getAlunosByTurmaId(Integer.parseInt(rsdados.getObject(1).toString())));
 			}
 		} catch (SQLException erro) {
@@ -123,9 +121,7 @@ public class TurmaController implements IDao<Turma> {
 		pstdados.setString(1, turma.getNome());
 		pstdados.setString(2, turma.getCodigo());
 		pstdados.setString(3, turma.getSala());
-		pstdados.setDate(4, (Date) turma.getAno());
-		pstdados.setObject(5, turma.getProfessor());
-		pstdados.setArray(6, (Array) turma.getAlunos());
+		pstdados.setObject(4, turma.getProfessor().getId());
 	}
 
 	@Override

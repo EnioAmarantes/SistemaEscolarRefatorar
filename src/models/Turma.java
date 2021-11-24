@@ -18,36 +18,21 @@ public class Turma extends AModel{
 	@Getter @Setter
 	private String sala;
 	@Getter @Setter
-	private Date ano;
-	@Getter @Setter
 	private Professor professor = new Professor();
 	@Getter
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	
-	public Turma(int id, String nome, String codigo, String sala, String ano, Professor professor, ArrayList<Aluno> alunos){		
+	public Turma(int id, String nome, String codigo, String sala, Professor professor, ArrayList<Aluno> alunos){		
 		this.id = id;
 		this.setNome(nome);
 		this.setCodigo(codigo);
 		this.setSala(sala);
-		fillAno(ano);
 		this.setProfessor(professor);
 		this.alunos.addAll(alunos);
 	}
 
 	public Turma() {
 		// TODO Auto-generated constructor stub
-	}
-
-	private void fillAno(String ano) {
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy"); 
-		
-		try {
-			this.setAno(formato.parse(ano));			
-		}catch(ParseException ex) {
-			System.out.println(ex.getMessage());
-		}
-				
-		
 	}
 
 	public boolean matricularAluno(Aluno aluno) {

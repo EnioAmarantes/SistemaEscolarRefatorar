@@ -13,8 +13,14 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.MatriculaController;
 import models.Aluno;
+import shared.MessageConfirm;
 
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FormMatricula extends JFrame {
 	/**
@@ -53,12 +59,12 @@ public class FormMatricula extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Aluno", "Email", "RA"
+				"Id", "Aluno", "Email", "RA"
 			}
 		));
-		tblAlunos.getColumnModel().getColumn(0).setPreferredWidth(119);
-		tblAlunos.getColumnModel().getColumn(1).setPreferredWidth(170);
-		tblAlunos.getColumnModel().getColumn(2).setPreferredWidth(108);
+		tblAlunos.getColumnModel().getColumn(1).setPreferredWidth(119);
+		tblAlunos.getColumnModel().getColumn(2).setPreferredWidth(170);
+		tblAlunos.getColumnModel().getColumn(3).setPreferredWidth(108);
 		tblAlunos.setBounds(10, 39, 250, 271);
 		getContentPane().add(tblAlunos);
 		
@@ -67,20 +73,30 @@ public class FormMatricula extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Aluno", "Email", "RA"
+					"Id", "Aluno", "Email", "RA"
 				}
 			));
-		tblAlunosMatricular.getColumnModel().getColumn(0).setPreferredWidth(119);
-		tblAlunosMatricular.getColumnModel().getColumn(1).setPreferredWidth(170);
-		tblAlunosMatricular.getColumnModel().getColumn(2).setPreferredWidth(108);
+		tblAlunosMatricular.getColumnModel().getColumn(1).setPreferredWidth(119);
+		tblAlunosMatricular.getColumnModel().getColumn(2).setPreferredWidth(170);
+		tblAlunosMatricular.getColumnModel().getColumn(3).setPreferredWidth(108);
 		tblAlunosMatricular.setBounds(301, 39, 250, 271);
 		getContentPane().add(tblAlunosMatricular);
 		
-		JButton btnNewButton = new JButton("Cancelar");
-		btnNewButton.setBounds(431, 342, 120, 30);
-		getContentPane().add(btnNewButton);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnCancelar.setBounds(431, 342, 120, 30);
+		getContentPane().add(btnCancelar);
 		
 		JButton btnGravar = new JButton("Gravar");
+		btnGravar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Save();
+			}
+		});
 		btnGravar.setBounds(301, 342, 120, 30);
 		getContentPane().add(btnGravar);
 		
@@ -95,35 +111,116 @@ public class FormMatricula extends JFrame {
 		getContentPane().add(lblAlunosMatricular);
 		
 		JLabel lblMatricularTodos = new JLabel(">>");
+		lblMatricularTodos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MatricularTodos();
+			}
+		});
 		lblMatricularTodos.setFont(new Font("Arial Black", Font.BOLD, 14));
 		lblMatricularTodos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMatricularTodos.setBounds(270, 103, 26, 23);
 		getContentPane().add(lblMatricularTodos);
 		
 		JLabel lblMatricularAluno = new JLabel(">");
+		lblMatricularAluno.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MatricularAluno();
+			}
+		});
 		lblMatricularAluno.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMatricularAluno.setFont(new Font("Arial Black", Font.BOLD, 14));
 		lblMatricularAluno.setBounds(270, 137, 26, 23);
 		getContentPane().add(lblMatricularAluno);
 		
 		JLabel lblDesmatricularAluno = new JLabel("<");
+		lblDesmatricularAluno.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DesmatricularALuno();
+			}
+		});
 		lblDesmatricularAluno.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDesmatricularAluno.setFont(new Font("Arial Black", Font.BOLD, 14));
 		lblDesmatricularAluno.setBounds(270, 175, 26, 23);
 		getContentPane().add(lblDesmatricularAluno);
 		
 		JLabel lblDesmatricularTodos = new JLabel("<<");
+		lblDesmatricularTodos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DesmatricularTodos();
+			}
+		});
 		lblDesmatricularTodos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDesmatricularTodos.setFont(new Font("Arial Black", Font.BOLD, 14));
 		lblDesmatricularTodos.setBounds(270, 211, 26, 23);
 		getContentPane().add(lblDesmatricularTodos);
 		
+		LoadTables();
+	}
+
+	protected void Save() {
+		
+		matriculaController.DesmatricularAlunos(matriculaController.getMatricula().getAlunosRemoverMatricula());
+		matriculaController.MatricularAlunos(matriculaController.getMatricula().getAlunosMatriculados());
+
+		MessageConfirm.informDialog("Matrícula dos alunos atualizada com sucesso!");
+		
+		dispose();
+	}
+
+
+	protected void DesmatricularTodos() {
+		ArrayList<Aluno> lstAlunos = this.matriculaController.getMatricula().getAlunosMatriculados();
+		
+		for(Aluno aluno: lstAlunos) {
+			this.matriculaController.getMatricula().desmatricularAluno(aluno);
+		}
+	}
+
+	protected void DesmatricularALuno() {
+		int index = tblAlunosMatricular.getSelectedRow();
+		
+		if(index == -1)
+			return;
+		
+		Aluno aluno = getAt(tblAlunosMatricular, index);
+		
+		this.matriculaController.getMatricula().desmatricularAluno(aluno);
+		LoadTables();		
+	}
+
+	protected void MatricularAluno() {
+		int index = tblAlunos.getSelectedRow();
+		
+		if(index == -1)
+			return;
+		
+		Aluno aluno = getAt(tblAlunos, index);
+		
+		this.matriculaController.getMatricula().matricularAluno(aluno);
+		LoadTables();	
+	}
+
+	protected void MatricularTodos() {
+		ArrayList<Aluno> lstAlunos = this.matriculaController.getMatricula().getAlunos();
+		
+		for(Aluno aluno: lstAlunos) {
+			this.matriculaController.getMatricula().matricularAluno(aluno);
+		}
+		
+		LoadTables();
+	}
+
+	private void LoadTables() {
 		LoadAlunosMatriculados();
 		LoadAlunos();
 	}
 
 	private void LoadAlunos() {
-        var listaAlunos = this.matriculaController.getMatricula().getAlunosMatriculados();
+        var listaAlunos = this.matriculaController.getMatricula().getAlunos();
 		DefaultTableModel model = (DefaultTableModel) this.tblAlunos.getModel();
 		
         model.setRowCount(0);
@@ -141,6 +238,14 @@ public class FormMatricula extends JFrame {
         }
         
         listaAlunos.clear();
+	}
+	
+	protected Aluno getAt(JTable tblContent, int index) {
+		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
+		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Aluno").getModelIndex());
+		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
+		String RA = (String) tblContent.getValueAt(index, tblContent.getColumn("RA").getModelIndex());
+		return new Aluno(id, name, email, RA);
 	}
 
 	private void LoadAlunosMatriculados() {

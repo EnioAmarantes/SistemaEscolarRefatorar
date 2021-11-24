@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -47,13 +48,11 @@ public class FormTurma extends FormBase<Turma> {
 	protected JTextField txtTurma;
 	protected JTextField txtCodigo;
 	protected JTextField txtSala;
-	protected JTextField txtAno;
 	protected JComboBox<Professor> jcbProfessor;
 
 	private String Turma;
 	private String Codigo;
 	private String Sala;
-	private String Ano;
 	private Professor Professor;
 	private int Id = 0;
 
@@ -85,7 +84,7 @@ public class FormTurma extends FormBase<Turma> {
 		
 		this.controller = turmaController;
 		this.TITLE_ERROR = "Erro com os dados do Aluno";
-		String[] alunoColumns = {"Id", "Turma", "Código", "Sala", "Ano", "Professor/Disciplina", "Alunos Matriculados"};
+		String[] alunoColumns = {"Id", "Turma", "Código", "Sala", "Professor/Disciplina", "Alunos Matriculados"};
 		this.setColumns(alunoColumns);
 		
 		contentPane = new JPanel();
@@ -124,16 +123,6 @@ public class FormTurma extends FormBase<Turma> {
 		getContentPane().add(txtSala);
 		
 		
-		JLabel lblAno = new JLabel("Ano");
-		lblAno.setBounds(10, 221, 368, 14);
-		getContentPane().add(lblAno);
-		
-		txtAno = new JTextField();
-		txtAno.setColumns(10);
-		txtAno.setBounds(10, 238, 368, 20);
-		getContentPane().add(txtAno);
-		
-		
 		JLabel lblProfessor = new JLabel("Professor");
 		lblProfessor.setBounds(10, 269, 368, 14);
 		getContentPane().add(lblProfessor);
@@ -163,15 +152,14 @@ public class FormTurma extends FormBase<Turma> {
 	private void LoadProfessores() {
 		ProfessorController professorController = new ProfessorController();
 		
-		ArrayList<Professor> listaProfessor = professorController.Lista();
+		Vector<Professor> listaProfessor = new Vector<Professor>();
 		
-		ArrayList<String> campos = new ArrayList<String>();
-		
-		for(Professor professor: listaProfessor) {
-			campos.add(professor.getNomeDisciplina());
+		for(Professor professor : professorController.Lista()) {
+			listaProfessor.add(professor);
 		}
 		
-		jcbProfessor.setModel(new DefaultComboBoxModel(campos.toArray()));
+		jcbProfessor.setModel(new DefaultComboBoxModel<Professor>(listaProfessor));
+		
 	}
 
 	@Override
@@ -200,7 +188,7 @@ public class FormTurma extends FormBase<Turma> {
 	@Override
 	public boolean is_valid() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -213,7 +201,6 @@ public class FormTurma extends FormBase<Turma> {
 					turma.getNome(),
 					turma.getCodigo(),
 					turma.getSala(),
-					turma.getAno().toString(),
 					turma.getProfessor().getNomeDisciplina(),
 					turma.getAlunos().size()
 			});
@@ -227,10 +214,9 @@ public class FormTurma extends FormBase<Turma> {
 		Turma = txtTurma.getText();
 		Codigo = txtCodigo.getText();
 		Sala = txtSala.getText();
-		Ano = txtAno.getText();
-		Professor = (models.Professor) jcbProfessor.getSelectedItem();
+		Professor = (Professor) jcbProfessor.getSelectedItem();
 		
-		return new Turma(Id , Turma, Codigo, Sala, Ano, Professor, new ArrayList<Aluno>());
+		return new Turma(Id , Turma, Codigo, Sala, Professor, new ArrayList<Aluno>());
 	}
 
 	@Override
@@ -240,7 +226,6 @@ public class FormTurma extends FormBase<Turma> {
 		Turma = txtTurma.getText();
 		Codigo = txtCodigo.getText();
 		Sala = txtSala.getText();
-		Ano = txtAno.getText();
 		Professor = (Professor) jcbProfessor.getSelectedItem();
 		
 	}
@@ -251,10 +236,9 @@ public class FormTurma extends FormBase<Turma> {
 		String Turma = (String) tblContent.getValueAt(index, tblContent.getColumn("Turma").getModelIndex());
 		String Codigo = (String) tblContent.getValueAt(index, tblContent.getColumn("Código").getModelIndex());
 		String Sala = (String) tblContent.getValueAt(index, tblContent.getColumn("Sala").getModelIndex());
-		String Ano = (String) tblContent.getValueAt(index, tblContent.getColumn("Ano").getModelIndex());
 		Professor Professor = (Professor) tblContent.getValueAt(index, tblContent.getColumn("Professor/Disciplina").getModelIndex());
 		
-		return new Turma(id, Turma, Codigo, Sala, Ano, Professor, new ArrayList<Aluno>());
+		return new Turma(id, Turma, Codigo, Sala, Professor, new ArrayList<Aluno>());
 	}
 
 	@Override
@@ -264,7 +248,6 @@ public class FormTurma extends FormBase<Turma> {
 		txtTurma.setText("");
 		txtCodigo.setText("");
 		txtSala.setText("");
-		txtAno.setText("");
 		jcbProfessor.setSelectedIndex(0);
 		
 	}
@@ -272,8 +255,8 @@ public class FormTurma extends FormBase<Turma> {
 	@Override
 	public void LoadTable() {
 		createTable(columns);
-		this.tblContent.getColumnModel().getColumn(5).setPreferredWidth(115);
-		this.tblContent.getColumnModel().getColumn(6).setPreferredWidth(113);
+		this.tblContent.getColumnModel().getColumn(4).setPreferredWidth(115);
+		this.tblContent.getColumnModel().getColumn(5).setPreferredWidth(113);
 		this.scrollPane.setViewportView(this.tblContent);
 		
 		RefreshTable();
