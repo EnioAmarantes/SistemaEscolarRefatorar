@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import models.Funcao;
 import models.Terceiro;
 
 class TerceiroControllerTest {
@@ -21,7 +22,7 @@ class TerceiroControllerTest {
 	
 	@BeforeEach
 	void carregaTerceiro() {
-		terceiro = new Terceiro(1, "NomeTerceiro", "email@email.com", "Funcao");
+		terceiro = new Terceiro(1, "NomeTerceiro", "email@email.com", new Funcao("Funcao"));
 	}
 
 	@Test
@@ -44,7 +45,7 @@ class TerceiroControllerTest {
 	@Test
 	void testModificar() {
 		terceiroController.Cria(terceiro);
-        Terceiro TerceiroModificar = new Terceiro(1, "NomeTerceiroModificado", "emailmodificado@email.com", "FuncaoModificada");
+        Terceiro TerceiroModificar = new Terceiro(1, "NomeTerceiroModificado", "emailmodificado@email.com", new Funcao("FuncaoModificada"));
         terceiroController.Modificar(TerceiroModificar);
         assertEquals(terceiroController.terceiros.get(0).id, TerceiroModificar.id);
         assertEquals(terceiroController.terceiros.get(0).getNome(), TerceiroModificar.getNome());

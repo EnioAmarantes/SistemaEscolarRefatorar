@@ -8,11 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import shared.database.migrations.CreateAlunoTable;
+import shared.database.migrations.CreateDisciplinaTable;
+import shared.database.migrations.CreateFuncaoTable;
 import shared.database.migrations.CreateMatriculaTable;
 import shared.database.migrations.CreateProfessorTable;
 import shared.database.migrations.CreateTerceiroTable;
 import shared.database.migrations.CreateTurmaTable;
 import shared.database.seeders.AlunoSeeder;
+import shared.database.seeders.DisciplinaSeeder;
+import shared.database.seeders.FuncaoSeeder;
 import shared.database.seeders.ProfessorSeeder;
 import shared.database.seeders.TerceiroSeeder;
 
@@ -47,6 +51,10 @@ public class StartWindow {
 	 * Create the application.
 	 */
 	public StartWindow() {
+		CreateFuncaoTable cFuncao = new CreateFuncaoTable();
+		cFuncao.up(new FuncaoSeeder());
+		CreateDisciplinaTable cDisciplina = new CreateDisciplinaTable();
+		cDisciplina.up(new DisciplinaSeeder());
 		CreateAlunoTable ca = new CreateAlunoTable();
 		ca.up(new AlunoSeeder());
 		CreateProfessorTable cp = new CreateProfessorTable();

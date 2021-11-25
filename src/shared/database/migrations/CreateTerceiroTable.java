@@ -8,7 +8,10 @@ public class CreateTerceiroTable extends AMigrate{
 				+ "  `id_terceiro` INT NOT NULL AUTO_INCREMENT, "
 				+ "  `nome` VARCHAR(100) NOT NULL, "
 				+ "  `email` VARCHAR(50) NOT NULL, "
-				+ "  `funcao` VARCHAR(45) NOT NULL, "
-				+ "  PRIMARY KEY (`id_terceiro`));";
+				+ "  `id_funcao` int NOT NULL, "
+				+ "  PRIMARY KEY (`id_terceiro`), "
+				+ "CONSTRAINT fk_terceiro_funcao "
+				+ "	foreign key (`id_funcao`) "
+				+ "	references `funcao` (`id_funcao`));";
 	}
 }

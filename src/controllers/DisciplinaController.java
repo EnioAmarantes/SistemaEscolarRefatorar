@@ -3,40 +3,38 @@
  */
 package controllers;
 
-import java.util.ArrayList;
-
-import models.Professor;
-import shared.ADatabase;
-import shared.IDao;
-import shared.consts.Config;
-import shared.database.MySqlDatabase;
-
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+
+import models.Disciplina;
+import shared.ADatabase;
+import shared.IDao;
+import shared.consts.Config;
+import shared.database.MySqlDatabase;
 
 /**
  * @author enio
  *
  */
-public class ProfessorController implements IDao<Professor> {
+public class DisciplinaController implements IDao<Disciplina> {
 
-	ArrayList<Professor> professores = new ArrayList<Professor>();
+	ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 
 	private ResultSet rsdados = null;
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
 
-	private static final String sqlconsulta = "SELECT * FROM professor order by id_professor";
-	private static final String sqlinserir = "INSERT INTO professor (nome, email, id_disciplina) VALUES ( ?, ?, ?)";
-	private static final String sqlalterar = "UPDATE professor SET nome = ?, email = ?, id_disciplina = ? WHERE id_professor = ?";
-	private static final String sqlexcluir = "DELETE FROM professor WHERE id_professor = ?";
+	private static final String sqlconsulta = "SELECT * FROM disciplina order by id_Disciplina";
+	private static final String sqlConsultaById = "SELECT * FROM disciplina WHERE ID_DISCIPLINA = ?";
+	private static final String sqlinserir = "INSERT INTO disciplina (nome) VALUES ( ? )";
+	private static final String sqlalterar = "UPDATE disciplina SET nome = ? WHERE id_Disciplina = ?";
+	private static final String sqlexcluir = "DELETE FROM disciplina WHERE id_Disciplina = ?";
 
-	public ProfessorController() {
+	public DisciplinaController() {
 		try {
 			ADatabase.init(Config.PATHDB);
 		} catch (ClassNotFoundException | IOException e) {
@@ -47,26 +45,21 @@ public class ProfessorController implements IDao<Professor> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<Professor> Lista() {
-
-		ArrayList<Professor> professores = new ArrayList<Professor>();
-		DisciplinaController disciplinaController = new DisciplinaController();
+	public ArrayList<Disciplina> Lista() {
+		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		try {
 			this.ConsultarTodos();
 			while (rsdados.next()) {
-				Professor professor = new Professor(Integer.parseInt(rsdados.getObject(1).toString()),
-						rsdados.getObject(2).toString(), rsdados.getObject(3).toString(),
-						disciplinaController.getDisciplinaById(Integer.parseInt(rsdados.getObject(4).toString())));
+				Disciplina disciplina = new Disciplina(rsdados.getObject(1).toString());
 
-				professores.add(professor);
+				disciplinas.add(disciplina);
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return professores;
-		// return (ArrayList<Professor>) professores.clone();
+		return disciplinas;
 	}
 
 	public boolean ConsultarTodos() {
@@ -82,14 +75,12 @@ public class ProfessorController implements IDao<Professor> {
 		return false;
 	}
 
-	protected void prepStatSet(Professor professor) throws SQLException {
-		pstdados.setString(1, professor.getNome());
-		pstdados.setString(2, professor.getEmail());
-		pstdados.setInt(3, professor.getDisciplina().getId());
+	protected void prepStatSet(Disciplina Disciplina) throws SQLException {
+		pstdados.setString(1, Disciplina.getNome());
 	}
 
 	@Override
-	public boolean Cria(Professor professor) {
+	public boolean Cria(Disciplina Disciplina) {
     try {
       connection = MySqlDatabase.getConnection();
       pstdados = (PreparedStatement) connection.prepareStatement(
@@ -97,50 +88,67 @@ public class ProfessorController implements IDao<Professor> {
           ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
       connection.setAutoCommit(false);
-      this.prepStatSet(professor);
+      this.prepStatSet(Disciplina);
       pstdados.executeUpdate();
       connection.commit();
+      return true;
     } catch (SQLException ex) {
       ex.printStackTrace();
+      return false;
     }
-		return professores.add(professor);
-
 	}
 
 	@Override
-	public Professor Modificar(Professor professor) {
+	public Disciplina Modificar(Disciplina Disciplina) {
 		try {
 			connection = MySqlDatabase.getConnection();
 			pstdados = (PreparedStatement) connection.prepareStatement(sqlalterar, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			connection.setAutoCommit(false);
-			this.prepStatSet(professor);
-			pstdados.setInt(4, professor.getId());
+			this.prepStatSet(Disciplina);
+			pstdados.setInt(4, Disciplina.getId());
 			pstdados.executeUpdate();
 			connection.commit();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		return professor;
+		return Disciplina;
 	}
 
 	@Override
-	public Professor Excluir(Professor professor) {
+	public Disciplina Excluir(Disciplina Disciplina) {
 		try {
 			connection = MySqlDatabase.getConnection();
 			pstdados = (PreparedStatement) connection.prepareStatement(sqlexcluir, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			connection.setAutoCommit(false);
-			pstdados.setInt(1, professor.getId());
+			pstdados.setInt(1, Disciplina.getId());
 			pstdados.executeUpdate();
 			connection.commit();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 
-		return professor;
+		return Disciplina;
 	}
-	
+
+	public Disciplina getDisciplinaById(int id_disciplina) {
+		Disciplina disciplina = new Disciplina();
+		try {
+			connection = MySqlDatabase.getConnection();
+			pstdados = connection.prepareStatement(sqlConsultaById, ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			pstdados.setInt(1, id_disciplina);
+			rsdados = pstdados.executeQuery();
+			while (rsdados.next()) {
+				disciplina = new Disciplina(rsdados.getObject(1).toString());
+			}
+			
+		} catch (SQLException erro) {
+			System.out.println("Erro ao executar consulta = " + erro);
+		}
+		return disciplina;
+	}
 
 }

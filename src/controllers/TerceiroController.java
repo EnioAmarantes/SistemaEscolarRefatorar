@@ -30,8 +30,8 @@ public class TerceiroController implements IDao<Terceiro> {
 	private PreparedStatement pstdados = null;
 	
 	private static final String sqlconsulta = "SELECT * FROM terceiro order by id_terceiro";
-	private static final String sqlinserir = "INSERT INTO terceiro (nome, email, funcao) VALUES ( ?, ?, ?)";
-    private static final String sqlalterar = "UPDATE terceiro SET nome = ?, email = ?, funcao = ? WHERE id_terceiro = ?";
+	private static final String sqlinserir = "INSERT INTO terceiro (nome, email, id_funcao) VALUES ( ?, ?, ?)";
+    private static final String sqlalterar = "UPDATE terceiro SET nome = ?, email = ?, id_funcao = ? WHERE id_terceiro = ?";
     private static final String sqlexcluir = "DELETE FROM terceiro WHERE id_terceiro = ?";
 	
 	public TerceiroController() {
@@ -47,6 +47,7 @@ public class TerceiroController implements IDao<Terceiro> {
 	@Override
 	public ArrayList<Terceiro> Lista() {
 		ArrayList<Terceiro> terceiros = new ArrayList<Terceiro>();
+		FuncaoController funcaoController = new FuncaoController();
 		try {
         	this.ConsultarTodos();
 			while(rsdados.next()){
@@ -54,7 +55,7 @@ public class TerceiroController implements IDao<Terceiro> {
 						Integer.parseInt(rsdados.getObject(1).toString()), 
 						rsdados.getObject(2).toString(), 
 						rsdados.getObject(3).toString(), 
-						rsdados.getObject(4).toString()
+						funcaoController.getFuncaoById(Integer.parseInt(rsdados.getObject(4).toString()))
 				);
 
 			    terceiros.add(terceiro);
@@ -82,7 +83,7 @@ public class TerceiroController implements IDao<Terceiro> {
 	protected void prepStatSet(Terceiro terceiro) throws SQLException{
         pstdados.setString(1, terceiro.getNome());
         pstdados.setString(2, terceiro.getEmail());
-        pstdados.setString(3, terceiro.getFuncao());
+        pstdados.setInt(3, terceiro.getFuncao().getId());
 	}
 	
 	@Override

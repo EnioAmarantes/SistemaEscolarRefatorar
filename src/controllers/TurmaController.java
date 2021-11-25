@@ -178,6 +178,7 @@ public class TurmaController implements IDao<Turma> {
 	
 	public Professor getProfessorByTurmaId(int id) {
 		Professor professor = new Professor();
+		DisciplinaController disciplinaController = new DisciplinaController();
 			try {
 				connection = MySqlDatabase.getConnection();
 				pstdadosProfessor = (PreparedStatement) connection.prepareStatement(sqlGetProfessorByTurmaId, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -189,7 +190,7 @@ public class TurmaController implements IDao<Turma> {
 						Integer.parseInt(rsdadosProfessor.getObject(1).toString()),
 						rsdadosProfessor.getObject(2).toString(), 
 						rsdadosProfessor.getObject(3).toString(),
-						rsdadosProfessor.getObject(4).toString());
+						disciplinaController.getDisciplinaById(Integer.parseInt(rsdadosProfessor.getObject(4).toString())));
 				}
 				
 			} catch (SQLException ex) {

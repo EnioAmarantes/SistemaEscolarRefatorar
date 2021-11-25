@@ -2,6 +2,7 @@ package views;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -11,14 +12,19 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controllers.DisciplinaController;
 import controllers.ProfessorController;
 import models.Aluno;
 import models.Professor;
+import models.Disciplina;
 import shared.APessoa;
 import shared.EMode;
 import shared.MessageConfirm;
 import shared.Validator;
 import shared.forms.FormPessoaBase;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 public class FormProfessor extends FormPessoaBase {
 
@@ -37,8 +43,8 @@ public class FormProfessor extends FormPessoaBase {
 	private static final String DisciplinaError = "Verifique a Disciplina desse Professor";
 	
 	private int Id = 0;
-	private String Disciplina = "";
-	private JTextField txtDisciplina;
+	private Disciplina Disciplina;
+	private JComboBox<Disciplina> jcbDisciplina;
 
 	/**
 	 * Launch the application.
@@ -81,15 +87,28 @@ public class FormProfessor extends FormPessoaBase {
 		lblRa.setBounds(10, 178, 94, 14);
 		getContentPane().add(lblRa);
 
-		txtDisciplina = new JTextField();
-		lblRa.setLabelFor(txtDisciplina);
-		txtDisciplina.setBounds(10, 198, 369, 20);
-		getContentPane().add(txtDisciplina);
-		txtDisciplina.setColumns(10);
+		jcbDisciplina = new JComboBox();
+		lblRa.setLabelFor(jcbDisciplina);
+		jcbDisciplina.setBounds(10, 198, 369, 20);
+		getContentPane().add(jcbDisciplina);
+		
+		LoadDisciplinas();
 
 		LoadTable();
 	}
 
+	private void LoadDisciplinas() {
+		DisciplinaController disciplinaController = new DisciplinaController();
+		
+		Vector<Disciplina> listaDisciplina = new Vector<Disciplina>();
+		
+		for(Disciplina disciplina : disciplinaController.Lista()) {
+			listaDisciplina.add(disciplina);
+		}
+		
+		jcbDisciplina.setModel(new DefaultComboBoxModel<Disciplina>(listaDisciplina));
+		
+	}
 	@Override
 	public void BackHome() {
 		// TODO Auto-generated method stub
@@ -108,8 +127,7 @@ public class FormProfessor extends FormPessoaBase {
 		Email = "";
 		txtEmail.setText(Email);
 
-		Disciplina = "";
-		txtDisciplina.setText(Disciplina);
+		Disciplina = new Disciplina("");
 	}
 
 	@Override
@@ -166,14 +184,14 @@ public class FormProfessor extends FormPessoaBase {
 		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
 		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
 		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
-		String disciplina = (String) tblContent.getValueAt(index, tblContent.getColumn("Disciplina").getModelIndex());
+		Disciplina disciplina = (Disciplina) tblContent.getValueAt(index, tblContent.getColumn("Disciplina").getModelIndex());
 		return new Professor(id, name, email, disciplina);
 	}
 	
 	public Professor fill() {
 		Name = txtName.getText();
 		Email = txtEmail.getText();
-		Disciplina = txtDisciplina.getText();
+		Disciplina = (Disciplina) jcbDisciplina.getSelectedItem();
 		
 		return new Professor(Id, Name, Email, Disciplina);
 	}
@@ -184,7 +202,7 @@ public class FormProfessor extends FormPessoaBase {
 		Id = professor.getId();
 		txtName.setText(professor.getNome());
 		txtEmail.setText(professor.getEmail());
-		txtDisciplina.setText(professor.getDisciplina());
+		jcbDisciplina.setSelectedItem(professor.getDisciplina());
 	}
 	
 	private boolean NameIsValid() {
@@ -219,9 +237,9 @@ public class FormProfessor extends FormPessoaBase {
 
 	private boolean DisciplinaIsValid() {
 		
-		if(!Validator.ValidName(txtDisciplina.getText())) {
+		if(!Validator.ValidName(jcbDisciplina.getSelectedItem().toString())) {
 			MessageConfirm.messageError(DisciplinaError, TITLE_ERROR);
-			txtDisciplina.requestFocus();
+			jcbDisciplina.requestFocus();
 			return false;
 		}
 		return true;

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,13 +13,20 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controllers.DisciplinaController;
+import controllers.FuncaoController;
 import controllers.TerceiroController;
 import models.Terceiro;
+import models.Disciplina;
+import models.Funcao;
 import shared.APessoa;
 import shared.EMode;
 import shared.MessageConfirm;
 import shared.Validator;
 import shared.forms.FormPessoaBase;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 public class FormTerceiro extends FormPessoaBase {
 
@@ -45,8 +53,8 @@ public class FormTerceiro extends FormPessoaBase {
 	private static final String RaError = "Verifique a Função desse Terceiro";
 	
 	private int Id = 0;
-	private String Funcao = "";
-	private JTextField txtFunc;
+	private Funcao Funcao;
+	private JComboBox<Funcao> jcbFuncao;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,13 +93,13 @@ public class FormTerceiro extends FormPessoaBase {
 		lblRa.setBounds(10, 178, 46, 14);
 		getContentPane().add(lblRa);
 		
-		txtFunc = new JTextField();
-		lblRa.setLabelFor(txtFunc);
-		txtFunc.setBounds(10, 198, 369, 20);
-		getContentPane().add(txtFunc);
-		txtFunc.setColumns(10);
+		jcbFuncao = new JComboBox();
+		lblRa.setLabelFor(jcbFuncao);
+		jcbFuncao.setBounds(10, 198, 369, 20);
+		getContentPane().add(jcbFuncao);
 
 
+		LoadFuncao();
 		LoadTable();
 	}
 
@@ -100,6 +108,19 @@ public class FormTerceiro extends FormPessoaBase {
 	public void BackHome() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void LoadFuncao() {
+		FuncaoController funcaoController = new FuncaoController();
+		
+		Vector<Funcao> listaFuncao = new Vector<Funcao>();
+		
+		for(Funcao funcao : funcaoController.Lista()) {
+			listaFuncao.add(funcao);
+		}
+		
+		jcbFuncao.setModel(new DefaultComboBoxModel<Funcao>(listaFuncao));
+			
 	}
 
 	@Override
@@ -114,8 +135,8 @@ public class FormTerceiro extends FormPessoaBase {
 		Email = "";
 		txtEmail.setText(Email);
 
-		Funcao = "";
-		txtFunc.setText(Funcao);
+		Funcao = new Funcao("");
+		jcbFuncao.setSelectedItem(0);
 	}
 
 	@Override
@@ -140,14 +161,14 @@ public class FormTerceiro extends FormPessoaBase {
 		int id = (int) tblContent.getValueAt(index, tblContent.getColumn("Id").getModelIndex());
 		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
 		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
-		String Funcao = (String) tblContent.getValueAt(index, tblContent.getColumn("Funcao").getModelIndex());
+		Funcao Funcao = (Funcao) tblContent.getValueAt(index, tblContent.getColumn("Funcao").getModelIndex());
 		return new Terceiro(id, name, email, Funcao);
 	}
 	
 	public Terceiro fill() {
 		Name = txtName.getText();
 		Email = txtEmail.getText();
-		Funcao = txtFunc.getText();
+		Funcao = (Funcao) jcbFuncao.getSelectedItem();
 		
 		return new Terceiro(Id, Name, Email, Funcao);
 	}
@@ -158,7 +179,7 @@ public class FormTerceiro extends FormPessoaBase {
 		Id = terceiro.getId();
 		txtName.setText(terceiro.getNome());
 		txtEmail.setText(terceiro.getEmail());
-		txtFunc.setText(terceiro.getFuncao());
+		jcbFuncao.setSelectedItem(terceiro.getFuncao());
 	}
 
 	@Override
@@ -206,9 +227,9 @@ public class FormTerceiro extends FormPessoaBase {
 
 	private boolean FuncIsValid() {
 		
-		if(!Validator.ValidName(txtFunc.getText())) {
+		if(!Validator.ValidName(jcbFuncao.getSelectedItem().toString())) {
 			MessageError(RaError);
-			txtFunc.requestFocus();
+			jcbFuncao.requestFocus();
 			return false;
 		}
 		return true;

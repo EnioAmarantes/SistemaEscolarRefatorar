@@ -6,13 +6,13 @@ import shared.APessoa;
 
 public class Professor extends APessoa {
 	@Getter @Setter
-	private String disciplina;
+	private Disciplina disciplina;
 
-	public Professor(int id, String name, String email, String disciplina) {
+	public Professor(int id, String name, String email, Disciplina disciplina2) {
 		this.id = id;
 		this.setNome(name);
 		this.setEmail(email);
-		this.setDisciplina(disciplina);
+		this.setDisciplina(disciplina2);
 	}
 
 	public Professor() {

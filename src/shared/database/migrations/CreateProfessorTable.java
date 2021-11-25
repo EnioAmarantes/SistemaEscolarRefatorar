@@ -8,7 +8,10 @@ public class CreateProfessorTable extends AMigrate{
 				+ "  `id_professor` INT NOT NULL AUTO_INCREMENT, "
 				+ "  `nome` VARCHAR(100) NOT NULL, "
 				+ "  `email` VARCHAR(50) NOT NULL, "
-				+ "  `disciplina` VARCHAR(45) NOT NULL, "
-				+ "  PRIMARY KEY (`id_professor`));";
+				+ "  `id_disciplina` int NOT NULL, "
+				+ "  PRIMARY KEY (`id_professor`), "
+				+ "	CONSTRAINT `fk_professor_disciplina` "
+				+ "	FOREIGN KEY (`id_disciplina`) "
+				+ "	REFERENCES `disciplina` (`id_disciplina`));";
 	}
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import models.Disciplina;
 import models.Professor;
 
 class ProfessorControllerTest {
@@ -21,7 +22,7 @@ class ProfessorControllerTest {
 	
 	@BeforeEach
 	void carregaProfessor() {
-		professor = new Professor(1, "NomeProfessor", "email@email.com", "Disciplina");
+		professor = new Professor(1, "NomeProfessor", "email@email.com", new Disciplina("Disciplina"));
 	}
 
 	@Test
@@ -44,7 +45,7 @@ class ProfessorControllerTest {
 	@Test
 	void testModificar() {
 		professorController.Cria(professor);
-        Professor professorModificar = new Professor(1, "NomeProfessorModificado", "emailmodificado@email.com", "DisciplinaModificada");
+        Professor professorModificar = new Professor(1, "NomeProfessorModificado", "emailmodificado@email.com", new Disciplina("DisciplinaModificada"));
         professorController.Modificar(professorModificar);
         assertEquals(professorController.professores.get(0).id, professorModificar.id);
         assertEquals(professorController.professores.get(0).getNome(), professorModificar.getNome());
