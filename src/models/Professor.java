@@ -23,4 +23,9 @@ public class Professor extends APessoa {
 		// TODO Auto-generated method stub
 		return this.getNome() + " / " + this.getDisciplina();
 	}
+	
+	@Override
+	public String toString() {
+		return getNomeDisciplina();
+	}
 }
