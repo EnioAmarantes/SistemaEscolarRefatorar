@@ -1,10 +1,10 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,13 +13,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.TerceiroController;
-import models.Aluno;
-import models.Professor;
 import models.Terceiro;
 import shared.APessoa;
 import shared.EMode;
 import shared.MessageConfirm;
-import shared.NumberValidator;
 import shared.Validator;
 import shared.forms.FormPessoaBase;
 
@@ -68,6 +65,10 @@ public class FormTerceiro extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormTerceiro() {
+		setSize(new Dimension(980, 400));
+		this.scrollPane.setBounds(388, 47, 560, 300);
+		this.btnRefresh.setSize(560, 23);
+		
 		this.controller = terceiroController;
 		this.TITLE_ERROR = "Erro com os dados de Terceirizado";
 		String[] terceiroColumns = {"Id", "Nome", "Email", "Funcao"};
@@ -219,6 +220,10 @@ public class FormTerceiro extends FormPessoaBase {
 
 	@Override
 	public void FillTable(DefaultTableModel model) {
+		
+		this.tblContent.getColumnModel().getColumn(0).setPreferredWidth(10);
+		this.tblContent.getColumnModel().getColumn(3).setPreferredWidth(113);
+		
         var listaTerceiros = terceiroController.Lista();
         
         for (Terceiro terceiro : listaTerceiros) {

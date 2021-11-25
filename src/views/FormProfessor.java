@@ -3,6 +3,7 @@ package views;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -59,6 +60,11 @@ public class FormProfessor extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormProfessor() {
+		
+		setSize(new Dimension(980, 400));
+		this.scrollPane.setBounds(388, 47, 560, 300);
+		this.btnRefresh.setSize(560, 23);
+		
 		this.controller = professorController;
 		this.TITLE_ERROR = "Erro com os dados do Professor";
 		String[] professorColumns = {"Id", "Nome", "Email", "Disciplina"};
@@ -137,6 +143,10 @@ public class FormProfessor extends FormPessoaBase {
 
 	@Override
 	public void FillTable(DefaultTableModel model) {
+		
+		this.tblContent.getColumnModel().getColumn(0).setPreferredWidth(10);
+		this.tblContent.getColumnModel().getColumn(3).setPreferredWidth(113);
+		
         var listaProfessores = professorController.Lista();
         
         for (Professor professor : listaProfessores) {

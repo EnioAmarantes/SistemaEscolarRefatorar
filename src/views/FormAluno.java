@@ -65,8 +65,8 @@ public class FormAluno extends FormPessoaBase {
 	 */
 	public FormAluno() {
 		
-		setSize(new Dimension(980, 500));
-		this.scrollPane.setBounds(388, 47, 560,410);
+		setSize(new Dimension(980, 400));
+		this.scrollPane.setBounds(388, 47, 560, 300);
 		this.btnRefresh.setSize(560, 23);
 		
 		this.controller = alunoController;
@@ -224,6 +224,11 @@ public class FormAluno extends FormPessoaBase {
 
 	@Override
 	public void FillTable(DefaultTableModel model) {
+		
+		this.tblContent.getColumnModel().getColumn(0).setPreferredWidth(10);
+		this.tblContent.getColumnModel().getColumn(2).setPreferredWidth(115);
+		this.tblContent.getColumnModel().getColumn(3).setPreferredWidth(113);
+		
         var listaAlunos = alunoController.Lista();
         
         for (Aluno aluno : listaAlunos) {
