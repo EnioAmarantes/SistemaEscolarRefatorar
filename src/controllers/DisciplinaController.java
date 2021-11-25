@@ -28,11 +28,11 @@ public class DisciplinaController implements IDao<Disciplina> {
 	private Connection connection = null;
 	private PreparedStatement pstdados = null;
 
-	private static final String sqlconsulta = "SELECT * FROM disciplina order by id_Disciplina";
-	private static final String sqlConsultaById = "SELECT * FROM disciplina WHERE ID_DISCIPLINA = ?";
+	private static final String sqlconsulta = "SELECT * FROM disciplina order by id_disciplina";
+	private static final String sqlConsultaById = "SELECT * FROM disciplina WHERE id_disciplina = ?";
 	private static final String sqlinserir = "INSERT INTO disciplina (nome) VALUES ( ? )";
-	private static final String sqlalterar = "UPDATE disciplina SET nome = ? WHERE id_Disciplina = ?";
-	private static final String sqlexcluir = "DELETE FROM disciplina WHERE id_Disciplina = ?";
+	private static final String sqlalterar = "UPDATE disciplina SET nome = ? WHERE id_disciplina = ?";
+	private static final String sqlexcluir = "DELETE FROM disciplina WHERE id_disciplina = ?";
 
 	public DisciplinaController() {
 		try {
@@ -50,7 +50,10 @@ public class DisciplinaController implements IDao<Disciplina> {
 		try {
 			this.ConsultarTodos();
 			while (rsdados.next()) {
-				Disciplina disciplina = new Disciplina(rsdados.getObject(1).toString());
+				Disciplina disciplina = new Disciplina(
+						Integer.parseInt(rsdados.getObject(1).toString()),
+						rsdados.getObject(2).toString()
+					);
 
 				disciplinas.add(disciplina);
 			}
@@ -75,12 +78,12 @@ public class DisciplinaController implements IDao<Disciplina> {
 		return false;
 	}
 
-	protected void prepStatSet(Disciplina Disciplina) throws SQLException {
-		pstdados.setString(1, Disciplina.getNome());
+	protected void prepStatSet(Disciplina disciplina) throws SQLException {
+		pstdados.setString(1, disciplina.getNome());
 	}
 
 	@Override
-	public boolean Cria(Disciplina Disciplina) {
+	public boolean Cria(Disciplina disciplina) {
     try {
       connection = MySqlDatabase.getConnection();
       pstdados = (PreparedStatement) connection.prepareStatement(
@@ -88,7 +91,7 @@ public class DisciplinaController implements IDao<Disciplina> {
           ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
       connection.setAutoCommit(false);
-      this.prepStatSet(Disciplina);
+      this.prepStatSet(disciplina);
       pstdados.executeUpdate();
       connection.commit();
       return true;
@@ -106,7 +109,7 @@ public class DisciplinaController implements IDao<Disciplina> {
 					ResultSet.CONCUR_UPDATABLE);
 			connection.setAutoCommit(false);
 			this.prepStatSet(Disciplina);
-			pstdados.setInt(4, Disciplina.getId());
+			pstdados.setInt(2, Disciplina.getId());
 			pstdados.executeUpdate();
 			connection.commit();
 		} catch (SQLException ex) {

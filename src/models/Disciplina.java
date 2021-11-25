@@ -7,7 +7,7 @@ public class Disciplina extends AModel {
 	@Getter
 	private String nome;
 	
-	public Disciplina(String string) {
+	public Disciplina(String nome) {
 		this.nome = nome;
 	}
 
