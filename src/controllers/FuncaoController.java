@@ -50,7 +50,10 @@ public class FuncaoController implements IDao<Funcao> {
 		try {
 			this.ConsultarTodos();
 			while (rsdados.next()) {
-				Funcao funcao = new Funcao(rsdados.getObject(1).toString());
+				Funcao funcao = new Funcao(
+						Integer.parseInt(rsdados.getObject(1).toString()),
+						rsdados.getObject(2).toString()
+					);
 
 				funcoes.add(funcao);
 			}
@@ -106,7 +109,7 @@ public class FuncaoController implements IDao<Funcao> {
 					ResultSet.CONCUR_UPDATABLE);
 			connection.setAutoCommit(false);
 			this.prepStatSet(funcao);
-			pstdados.setInt(4, funcao.getId());
+			pstdados.setInt(2, funcao.getId());
 			pstdados.executeUpdate();
 			connection.commit();
 		} catch (SQLException ex) {
@@ -138,7 +141,7 @@ public class FuncaoController implements IDao<Funcao> {
 		
 		try {
 			connection = MySqlDatabase.getConnection();
-			pstdados = connection.prepareStatement(sqlconsulta, ResultSet.TYPE_SCROLL_SENSITIVE,
+			pstdados = connection.prepareStatement(sqlconsultaById, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			rsdados = pstdados.executeQuery();
 			while (rsdados.next()) {

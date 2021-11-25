@@ -7,7 +7,7 @@ public class Funcao extends AModel {
 	@Getter
 	private String nome;
 	
-	public Funcao(String string) {
+	public Funcao(String nome) {
 		this.nome = nome;
 	}
 
