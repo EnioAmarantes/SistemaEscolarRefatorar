@@ -124,11 +124,11 @@ public class FormTurma extends FormBase<Turma> {
 		
 		
 		JLabel lblProfessor = new JLabel("Professor");
-		lblProfessor.setBounds(10, 269, 368, 14);
+		lblProfessor.setBounds(10, 223, 368, 14);
 		getContentPane().add(lblProfessor);
 		
 		jcbProfessor = new JComboBox<Professor>();
-		jcbProfessor.setBounds(10, 286, 368, 20);
+		jcbProfessor.setBounds(10, 240, 368, 20);
 		getContentPane().add(jcbProfessor);
 		
 		JButton btnMatricularAlunos = new JButton("Matricular Alunos");
