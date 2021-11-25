@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,11 +64,15 @@ public class FormAluno extends FormPessoaBase {
 	 * Create the frame.
 	 */
 	public FormAluno() {
+		
+		setSize(new Dimension(980, 500));
+		this.scrollPane.setBounds(388, 47, 560,410);
+		this.btnRefresh.setSize(560, 23);
+		
 		this.controller = alunoController;
 		this.TITLE_ERROR = "Erro com os dados do Aluno";
 		String[] alunoColumns = {"Id", "Nome", "Email", "RA"};
 		this.setColumns(alunoColumns);
-		
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
