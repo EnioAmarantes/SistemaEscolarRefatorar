@@ -3,4 +3,5 @@ module SistemGerenciamentoEscolar {
 	requires java.desktop;
 	requires org.junit.jupiter.api;
 	requires java.sql;
+	requires jasperreports;
 }

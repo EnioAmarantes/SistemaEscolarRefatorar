@@ -7,6 +7,23 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.io.InputStream;
+
+//import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+
+
+import shared.ADatabase;
+import shared.consts.Config;
+import shared.database.MySqlDatabase;
 import shared.database.migrations.CreateAlunoTable;
 import shared.database.migrations.CreateDisciplinaTable;
 import shared.database.migrations.CreateFuncaoTable;
@@ -20,7 +37,13 @@ import shared.database.seeders.FuncaoSeeder;
 import shared.database.seeders.ProfessorSeeder;
 import shared.database.seeders.TerceiroSeeder;
 
+
+
+
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -28,6 +51,7 @@ import javax.swing.JMenuItem;
 
 public class StartWindow {
 
+	public static final String relatorioTurma = System.getProperty("user.dir") + "/src/report/Relatorio_Turma.jasper";
 	private JFrame frmSistemaDeGerenciamento;
 	private final static String TITLE = "Sistema de Gerenciamento Escolar";
 
@@ -45,6 +69,32 @@ public class StartWindow {
 				}
 			}
 		});
+	}
+	
+	public void reportTurma() {
+		 JasperPrint impr;
+	        try {
+//	        	MySqlDatabase.init(Config.PATHDB);
+	        	String cam = System.getProperty("user.dir") +"/src/report/Relatorio_Turma.jrxml";
+//	        	System.out.println(cam);
+//	        	JasperReport relatorioCompilado = JasperCompileManager.compileReport(cam);
+//	        	Connection connection =  MySqlDatabase.getConnection();
+//	            impr = JasperFillManager.fillReport(relatorioCompilado, null, connection);
+	        	
+	        	
+	        	InputStream is = getClass().getResourceAsStream("E:\\Projects\\SistemaEscolarRefatorar\\src\\report\\Relatorio_Turma.jrxml");
+	            System.out.println(is);
+
+	            JasperReport report = JasperCompileManager.compileReport(is);
+	            
+//	            JasperViewer.viewReport(impr, false);
+//	            JasperViewer jasperViewer = new JasperViewer( impr, false );
+//		    jasperViewer.setVisible( true );
+		   
+	        } catch (JRException e) {
+	        	System.out.println("erro "+ e);
+	        	e.printStackTrace();
+			} 
 	}
 
 	/**
@@ -151,6 +201,12 @@ public class StartWindow {
 		mnuRelatorios.add(mnuRelatorioAlunos);
 		
 		JMenuItem mnuRelatorioTurmas = new JMenuItem("Relat\u00F3rio de Turmas");
+		mnuRelatorioTurmas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				reportTurma();
+				
+			}
+		});
 		mnuRelatorios.add(mnuRelatorioTurmas);
 		
 		JMenuItem mnuRelatorioDisciplinas = new JMenuItem("Relat\u00F3rio de Disciplinas");
