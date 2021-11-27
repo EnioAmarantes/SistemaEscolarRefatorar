@@ -52,6 +52,7 @@ import javax.swing.JMenuItem;
 public class StartWindow {
 
 	public static final String relatorioTurma = System.getProperty("user.dir") + "/src/report/Relatorio_Turma.jasper";
+	public static final String relatorioAluno = System.getProperty("user.dir") + "/src/report/Relatorio_Aluno.jasper";
 	private JFrame frmSistemaDeGerenciamento;
 	private final static String TITLE = "Sistema de Gerenciamento Escolar";
 
@@ -74,26 +75,48 @@ public class StartWindow {
 	public void reportTurma() {
 		 JasperPrint impr;
 	        try {
-//	        	MySqlDatabase.init(Config.PATHDB);
-	        	String cam = System.getProperty("user.dir") +"/src/report/Relatorio_Turma.jrxml";
-//	        	System.out.println(cam);
-//	        	JasperReport relatorioCompilado = JasperCompileManager.compileReport(cam);
-//	        	Connection connection =  MySqlDatabase.getConnection();
-//	            impr = JasperFillManager.fillReport(relatorioCompilado, null, connection);
-	        	
-	        	
-	        	InputStream is = getClass().getResourceAsStream("E:\\Projects\\SistemaEscolarRefatorar\\src\\report\\Relatorio_Turma.jrxml");
-	            System.out.println(is);
+	        	MySqlDatabase.init(Config.PATHDB);
 
-	            JasperReport report = JasperCompileManager.compileReport(is);
-	            
-//	            JasperViewer.viewReport(impr, false);
-//	            JasperViewer jasperViewer = new JasperViewer( impr, false );
-//		    jasperViewer.setVisible( true );
+
+	            impr = JasperFillManager.fillReport(relatorioTurma, null, MySqlDatabase.getConnection());
+	            JasperViewer.viewReport(impr, false);
 		   
 	        } catch (JRException e) {
 	        	System.out.println("erro "+ e);
 	        	e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+	}
+	
+	public void reportAluno() {
+		 JasperPrint impr;
+	        try {
+	        	MySqlDatabase.init(Config.PATHDB);
+
+
+	            impr = JasperFillManager.fillReport(relatorioAluno, null, MySqlDatabase.getConnection());
+	            JasperViewer.viewReport(impr, false);
+		   
+	        } catch (JRException e) {
+	        	System.out.println("erro "+ e);
+	        	e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} 
 	}
 
@@ -198,6 +221,11 @@ public class StartWindow {
 		menuBar.add(mnuRelatorios);
 		
 		JMenuItem mnuRelatorioAlunos = new JMenuItem("Relat\u00F3rio de Alunos");
+		mnuRelatorioAlunos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				reportAluno();
+			}
+		});
 		mnuRelatorios.add(mnuRelatorioAlunos);
 		
 		JMenuItem mnuRelatorioTurmas = new JMenuItem("Relat\u00F3rio de Turmas");
