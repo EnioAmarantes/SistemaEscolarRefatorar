@@ -236,8 +236,5 @@ public class StartWindow {
 			}
 		});
 		mnuRelatorios.add(mnuRelatorioTurmas);
-		
-		JMenuItem mnuRelatorioDisciplinas = new JMenuItem("Relat\u00F3rio de Disciplinas");
-		mnuRelatorios.add(mnuRelatorioDisciplinas);
 	}
 }
