@@ -43,8 +43,12 @@ public class FormAluno extends FormPessoaBase {
 	private static final String EmailError = "Verifique Email desse Aluno";
 	private static final String RaError = "Verifique o RA desse Aluno";
 	
+
+	
 	private int Id = 0;
 	private String RA = "";
+	private String RA_aux = "";
+	private String email_aux = "";
 	private JTextField txtRa;
 
 	public static void main(String[] args) {
@@ -139,6 +143,8 @@ public class FormAluno extends FormPessoaBase {
 		String name = (String) tblContent.getValueAt(index, tblContent.getColumn("Nome").getModelIndex());
 		String email = (String) tblContent.getValueAt(index, tblContent.getColumn("Email").getModelIndex());
 		String RA = (String) tblContent.getValueAt(index, tblContent.getColumn("RA").getModelIndex());
+		RA_aux = RA;
+		email_aux = email;
 		return new Aluno(id, name, email, RA);
 	}
 	
@@ -162,12 +168,15 @@ public class FormAluno extends FormPessoaBase {
 	@Override
 	public boolean is_valid() {
 		boolean isValid = true;
-		
+
 		isValid &= NameIsValid();
+		if(!email_aux.equals(txtEmail.getText()))
+			isValid &= EmailIsValid();
+		email_aux = "";
 		
-		isValid &= EmailIsValid();
-		
-		isValid &= RaIsValid();
+		if(!RA_aux.equals(txtRa.getText()))
+			isValid &= RaIsValid();
+		RA_aux = "";
 		
 		return isValid;
 	}
@@ -194,7 +203,7 @@ public class FormAluno extends FormPessoaBase {
 		
 		for(Aluno aluno : alunos) {
 			if(aluno.getEmail().equals(email)) {
-				ERROR_MESSAGE = "O email " + email + " jï¿½ estï¿½ cadastrado";
+				ERROR_MESSAGE = "O email " + email + " já está cadastrado";
 				return false;
 			}
 		}
@@ -214,7 +223,7 @@ public class FormAluno extends FormPessoaBase {
 		
 		for(Aluno aluno : alunos) {
 			if(aluno.getRegistro_academico().equals(RA)) {
-				ERROR_MESSAGE = "O RA " + RA + " jï¿½ estï¿½ cadastrado";
+				ERROR_MESSAGE = "O RA " + RA + " já está cadastrado";
 				return false;
 			}
 		}

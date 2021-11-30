@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Waves_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables">
@@ -67,7 +67,7 @@ ZDg7]]>
 		</band>
 	</background>
 	<title>
-		<band height="104" splitType="Stretch">
+		<band height="134" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="0" y="0" width="802" height="67" uuid="1dcadd54-7d50-4470-85ed-189e4d910b25"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -75,46 +75,57 @@ ZDg7]]>
 				</textElement>
 				<text><![CDATA[Gerenciamento Escolar]]></text>
 			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="97" y="100" width="705" height="34" backcolor="#666666" uuid="35d90a9b-bb7e-4ec4-bfa2-68be1967d6b2"/>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" x="182" y="10" width="160" height="27" forecolor="#FFFFFF" uuid="4ce38458-6b2e-4317-965b-c240a0aaf5aa">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18110213-ec13-4a9f-be78-070492ea61b7"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Email]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" x="384" y="10" width="100" height="27" forecolor="#FFFFFF" uuid="041d814b-d677-4656-a94a-c2f7c4077887">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="995e1ae4-8084-440d-b318-c2c9a4162ecb"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Registro Academico]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" x="532" y="10" width="138" height="27" forecolor="#FFFFFF" uuid="da52d1b1-59de-4fe8-b53e-92740691097d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9560e295-ce61-4baf-b01a-e42c33cdcc2f"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Quantidade de Turmas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" x="13" y="10" width="150" height="25" forecolor="#FFFFFF" uuid="f2c63beb-afd5-4577-ae8c-94ba940bae72">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fb989dd8-2fb0-4b73-9f6c-584918f4a23f"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="27" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="97" y="5" width="705" height="20" backcolor="#666666" uuid="35d90a9b-bb7e-4ec4-bfa2-68be1967d6b2"/>
-				<staticText>
-					<reportElement x="182" y="0" width="160" height="27" uuid="4ce38458-6b2e-4317-965b-c240a0aaf5aa">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18110213-ec13-4a9f-be78-070492ea61b7"/>
-					</reportElement>
-					<text><![CDATA[email]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="384" y="0" width="100" height="27" uuid="041d814b-d677-4656-a94a-c2f7c4077887">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="995e1ae4-8084-440d-b318-c2c9a4162ecb"/>
-					</reportElement>
-					<text><![CDATA[Registro Academico]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="532" y="0" width="100" height="27" uuid="da52d1b1-59de-4fe8-b53e-92740691097d">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9560e295-ce61-4baf-b01a-e42c33cdcc2f"/>
-					</reportElement>
-					<text><![CDATA[Quantidade de turmas]]></text>
-				</staticText>
-			</frame>
-		</band>
+		<band height="27" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="63" splitType="Stretch">
 			<frame>
 				<reportElement x="97" y="1" width="705" height="49" uuid="89a3da05-fdde-4ffe-965f-cc476f72e3ab"/>
-				<staticText>
-					<reportElement x="13" y="-31" width="150" height="25" uuid="f2c63beb-afd5-4577-ae8c-94ba940bae72">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fb989dd8-2fb0-4b73-9f6c-584918f4a23f"/>
-					</reportElement>
-					<text><![CDATA[nome]]></text>
-				</staticText>
 			</frame>
 			<textField>
 				<reportElement x="110" y="21" width="150" height="30" uuid="ca3faf7d-06b8-49ea-b644-ad285b163526">
