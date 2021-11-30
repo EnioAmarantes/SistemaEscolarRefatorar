@@ -51,8 +51,8 @@ import javax.swing.JMenuItem;
 
 public class StartWindow {
 
-	public static final String relatorioTurma = System.getProperty("user.dir") + "/src/report/Relatorio_Turma.jasper";
-	public static final String relatorioAluno = System.getProperty("user.dir") + "/src/report/Relatorio_Aluno.jasper";
+	public static final String RELATORIO_TURMA = "Relatorio_Turma.jasper";
+	public static final String RELATORIO_ALUNO = "Relatorio_Aluno.jasper";
 	private JFrame frmSistemaDeGerenciamento;
 	private final static String TITLE = "Sistema de Gerenciamento Escolar";
 
@@ -71,38 +71,15 @@ public class StartWindow {
 			}
 		});
 	}
-	
-	public void reportTurma() {
+		
+	public void report(String arq) {
 		 JasperPrint impr;
+		 String relatorio = System.getProperty("user.dir") + "/src/report/" + arq;
 	        try {
 	        	MySqlDatabase.init(Config.PATHDB);
 
 
-	            impr = JasperFillManager.fillReport(relatorioTurma, null, MySqlDatabase.getConnection());
-	            JasperViewer.viewReport(impr, false);
-		   
-	        } catch (JRException e) {
-	        	System.out.println("erro "+ e);
-	        	e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-	}
-	
-	public void reportAluno() {
-		 JasperPrint impr;
-	        try {
-	        	MySqlDatabase.init(Config.PATHDB);
-
-
-	            impr = JasperFillManager.fillReport(relatorioAluno, null, MySqlDatabase.getConnection());
+	            impr = JasperFillManager.fillReport(relatorio, null, MySqlDatabase.getConnection());
 	            JasperViewer.viewReport(impr, false);
 		   
 	        } catch (JRException e) {
@@ -223,7 +200,7 @@ public class StartWindow {
 		JMenuItem mnuRelatorioAlunos = new JMenuItem("Relat\u00F3rio de Alunos");
 		mnuRelatorioAlunos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				reportAluno();
+				report(RELATORIO_ALUNO);
 			}
 		});
 		mnuRelatorios.add(mnuRelatorioAlunos);
@@ -231,7 +208,7 @@ public class StartWindow {
 		JMenuItem mnuRelatorioTurmas = new JMenuItem("Relat\u00F3rio de Turmas");
 		mnuRelatorioTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				reportTurma();
+				report(RELATORIO_TURMA);
 				
 			}
 		});
