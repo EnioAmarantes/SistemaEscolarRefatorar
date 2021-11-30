@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatorio_Turma" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -94,71 +94,77 @@
 	<columnHeader>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="97" y="5" width="705" height="20" backcolor="#666666" uuid="35d90a9b-bb7e-4ec4-bfa2-68be1967d6b2"/>
+				<reportElement mode="Opaque" x="97" y="-10" width="705" height="34" backcolor="#666666" uuid="35d90a9b-bb7e-4ec4-bfa2-68be1967d6b2"/>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="20" y="11" width="100" height="25" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="2ca6afcc-8010-43b0-94b8-00349f63d396">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="accf2e05-d7b0-49b0-b328-a98e552739d6"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Codigo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="132" y="11" width="100" height="25" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="c079b25c-bf52-4ee6-9dc5-129c5ad12fa9">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7a237cf-63b2-42c7-8db6-4efe9a220315"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nome da Turma]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="250" y="11" width="100" height="25" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="e72390d3-a4ed-4030-80d7-03aa8e143b0d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e2378b3-3f36-455f-a839-5d98da937c9d"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Sala]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="391" y="11" width="100" height="25" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="be9943e7-f4d0-4d54-b1cb-89ba33c24735">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6bac3af3-3827-4190-9bc3-42d88d382a5f"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Professor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="520" y="11" width="100" height="25" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="5a84a472-7aad-481b-9292-acdbf83844e1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e6ed9a6-802c-4e0d-9adb-4445b5cce01b"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Disciplina]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="600" y="11" width="100" height="25" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="87ef165d-c1bd-4018-830a-bf98b5eeb16f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aff41320-c413-4169-9b9b-432ca3f04835"/>
+					</reportElement>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Quantidade Aluno]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="68" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<frame>
 				<reportElement x="97" y="1" width="705" height="15" uuid="89a3da05-fdde-4ffe-965f-cc476f72e3ab"/>
-				<staticText>
-					<reportElement x="132" y="4" width="100" height="25" uuid="48169279-85e9-4e26-be15-4914553a2f7c">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e348336c-995d-4e8e-a96a-4a0fd0402844"/>
-					</reportElement>
-					<text><![CDATA[Nome Turma]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="252" y="4" width="100" height="25" uuid="e72390d3-a4ed-4030-80d7-03aa8e143b0d">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e2378b3-3f36-455f-a839-5d98da937c9d"/>
-					</reportElement>
-					<text><![CDATA[Sala]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="393" y="2" width="100" height="25" uuid="be9943e7-f4d0-4d54-b1cb-89ba33c24735">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6bac3af3-3827-4190-9bc3-42d88d382a5f"/>
-					</reportElement>
-					<text><![CDATA[Professor]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="522" y="2" width="100" height="25" uuid="5a84a472-7aad-481b-9292-acdbf83844e1">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e6ed9a6-802c-4e0d-9adb-4445b5cce01b"/>
-					</reportElement>
-					<text><![CDATA[Disciplina]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="602" y="-1" width="100" height="25" uuid="87ef165d-c1bd-4018-830a-bf98b5eeb16f">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aff41320-c413-4169-9b9b-432ca3f04835"/>
-					</reportElement>
-					<text><![CDATA[Quantidade Aluno]]></text>
-				</staticText>
 			</frame>
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="87" y="28" width="705" height="34" uuid="e5f21b91-7f24-498e-97a1-0e93db9225a4"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement x="120" y="30" width="100" height="30" uuid="72106aa9-faa5-4b19-83ca-fd204f664284">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="accf2e05-d7b0-49b0-b328-a98e552739d6"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="120" y="5" width="100" height="25" uuid="2ca6afcc-8010-43b0-94b8-00349f63d396">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="accf2e05-d7b0-49b0-b328-a98e552739d6"/>
-				</reportElement>
-				<text><![CDATA[Codigo]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="230" y="32" width="100" height="30" uuid="0ea31bb0-590e-4de7-b6b4-a75f5c3d7189">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e348336c-995d-4e8e-a96a-4a0fd0402844"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{nome_turma}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="350" y="32" width="100" height="30" uuid="f467754b-69c1-4ac6-9fa6-99142df44991">
+				<reportElement x="351" y="30" width="100" height="30" uuid="f467754b-69c1-4ac6-9fa6-99142df44991">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e2378b3-3f36-455f-a839-5d98da937c9d"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{sala}]]></textFieldExpression>
@@ -180,6 +186,12 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aff41320-c413-4169-9b9b-432ca3f04835"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{qtd_aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="28" width="100" height="30" uuid="41803756-76a3-43f5-bb0e-32e86a7a51c4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7a237cf-63b2-42c7-8db6-4efe9a220315"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome_turma}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
